@@ -3,7 +3,6 @@ import RecipeDataService from "../../apis/RecipeServices";
 import { Link } from "react-router-dom";
 
 const ListRecipe = () => {
-
   //INITIAL HOOKS
   const [recipes, setRecipes] = useState([]);
   const [searchName, setSearchName] = useState("");
@@ -145,6 +144,12 @@ const ListRecipe = () => {
                 <strong>CookTime</strong>
               </label>{" "}
               {currentRecipe.cookTime}
+            </div>
+            <div>
+              <label>
+                <strong>Recipe Image</strong>
+              </label>{" "}
+              {currentRecipe.recipeImage}
             </div>
 
             <Link

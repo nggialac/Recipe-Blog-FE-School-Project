@@ -7,17 +7,17 @@ import RecipeId from "./pages/Dashboard/Recipe";
 import RecipeList from "./pages/Dashboard/ListRecipe";
 import AddRecipe from "./pages/Dashboard/AddRecipe";
 
+
 function App() {
   return (
-   
-      <Router>
-         <div>
+    <Router>
+      <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <a href="/home" className="navbar-brand">
             Dashboard
           </a>
           <div className="navbar-nav mr-auto">
-          <li className="nav-item">
+            <li className="nav-item">
               <Link to={"/recipe"} className="nav-link">
                 List Recipe
               </Link>
@@ -32,14 +32,14 @@ function App() {
 
         <div className="container mt-3">
           <Switch>
-            <Route exact path={["/", "/recipe"]} component={RecipeList}/>
-            <Route exact path="/add" component={AddRecipe}/>
-            <Route path="/recipe/:id" component={RecipeId}/>
+            <Route exact path={["/", "/recipe"]} component={RecipeList} />
+            <Route exact path="/add" component={AddRecipe} />
+            <Route path="/recipe/:id" component={RecipeId} />
+          
           </Switch>
         </div>
-        </div>
-      </Router>
-    
+      </div>
+    </Router>
   );
 }
 

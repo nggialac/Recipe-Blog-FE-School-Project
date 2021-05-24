@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RecipeDataService from "../../apis/RecipeServices";
 import { useForm } from "react-hook-form";
+import "./Recipe.css";
 
 const Recipe = (props) => {
   const initialRecipeState = {
@@ -9,6 +10,7 @@ const Recipe = (props) => {
     recipeDescription: "",
     prepTime: -1,
     cookTime: -1,
+    recipeImage: ""
   };
 
   //INITIAL HOOKS
@@ -33,18 +35,6 @@ const Recipe = (props) => {
   useEffect(() => {
     getRecipe(props.match.params.id);
   }, [props.match.params.id]);
-
-  // useLayoutEffect(() => {
-  //   if(currentRecipe){
-  //     reset({
-  //       recipeId: currentRecipe.recipeId,
-  //       recipeName: currentRecipe.recipeName,
-  //       recipeDescription: currentRecipe.recipeDescription,
-  //       prepTime: currentRecipe.prepTime,
-  //       cookTime: currentRecipe.cookTime,
-  //     });
-  //   }
-  // }, [Object]);
 
   const handleInputChange = (event) => {
     console.log(currentRecipe);
@@ -147,6 +137,19 @@ const Recipe = (props) => {
                 // name="cookTime"
                 // defaultValue={currentRecipe.cookTime}
                 value={currentRecipe.cookTime||""}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="recipeImage">recipeImage</label>
+              <input
+                {...register('recipeImage')}
+                type="text"
+                className="form-control"
+                id="recipeImage"
+                // name="cookTime"
+                // defaultValue={currentRecipe.cookTime}
+                value={currentRecipe.recipeImage||""}
                 onChange={handleInputChange}
               />
             </div>
