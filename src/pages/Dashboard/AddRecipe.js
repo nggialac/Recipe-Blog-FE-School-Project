@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import RecipeDataService from "../../apis/RecipeServices";
-import "./AddRecipe.css";
+import "./css/AddRecipe.css";
 
 var NEXT_PUBLIC_CLOUDINARY_CLOUDNAME = "recipe-photos";
 var NEXT_PUBLIC_CLOUDINARY_UNSIGNED_UPLOAD_PRESET = "qmzji0mo";
@@ -35,16 +35,21 @@ const AddRecipe = () => {
 
     RecipeDataService.createRecipe(data)
       .then((response) => {
-        setRecipe({
-          id: response.data.id,
-          cookTime: response.data.cookTime,
-          prepTime: response.data.prepTime,
-          recipeDescription: response.data.recipeDescription,
-          recipeName: response.data.recipeName,
-          recipeImage: response.data.recipeImage
-        });
-        setSubmitted(true);
-        console.log(response.data);
+        if(response.data.recipeName !== ""){
+          setRecipe({
+            id: response.data.id,
+            cookTime: response.data.cookTime,
+            prepTime: response.data.prepTime,
+            recipeDescription: response.data.recipeDescription,
+            recipeName: response.data.recipeName,
+            recipeImage: response.data.recipeImage
+          });
+          setSubmitted(true);
+          console.log(response.data);
+        } 
+        else{
+          alert("Input Name Recipe!");
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -228,9 +233,9 @@ const AddRecipe = () => {
 
           <div className="form-group">
             <div className="py-10">
-              <h1 className="text-3xl text-center font-bold">
-                Upload image to Cloudinary
-              </h1>
+              <h3 className="text-center font-bold">
+                Upload image (to Cloudinary)
+              </h3>
               <div className="py-10">
                 <div ref={dropbox} className="upload-image" style={{display: 'block'}}>
                   {image ? (
@@ -265,7 +270,7 @@ const AddRecipe = () => {
                     >
                       <form className="flex justify-center items-center h-full">
                         {progress === 0 ? (
-                          <div className="text-gray-700 text-center">
+                          <div className="text-gray-700 text-center ">
                             <button
                               className="btn btn-primary"
                               onClick={handleImageUpload}
@@ -275,7 +280,9 @@ const AddRecipe = () => {
                             </button>
                           </div>
                         ) : (
-                          <span className="text-gray-700">{progress}%</span>
+                          <div className="flex justify-center items-center">
+                            <span className="text-gray-700">{progress}%</span>
+                          </div>
                         )}
 
                         <input

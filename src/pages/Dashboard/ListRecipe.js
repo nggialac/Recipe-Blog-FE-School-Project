@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RecipeDataService from "../../apis/RecipeServices";
 import { Link } from "react-router-dom";
+import "./css/ListRecipe.css"
 
 const ListRecipe = () => {
   //INITIAL HOOKS
@@ -30,6 +31,18 @@ const ListRecipe = () => {
       });
   };
 
+  const deleteRecipe = () => {
+    //console.log(currentRecipe.recipeId);
+    RecipeDataService.removeRecipe(currentRecipe.recipeId)
+      .then((response) => {
+        console.log(response.data);
+        refreshList();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   const refreshList = () => {
     retrieveRecipes();
     setCurrentRecipe(null);
@@ -41,16 +54,16 @@ const ListRecipe = () => {
     setCurrentIndex(index);
   };
 
-  const removeAllRecipes = () => {
-    RecipeDataService.removeAllRecipe()
-      .then((response) => {
-        console.log(response.data);
-        refreshList();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+  // const removeAllRecipes = () => {
+  //   RecipeDataService.removeAllRecipe()
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       refreshList();
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // };
 
   const findByName = () => {
     RecipeDataService.findByRecipeName(searchName)
@@ -103,12 +116,12 @@ const ListRecipe = () => {
             ))}
         </ul>
 
-        <button
+        {/* <button
           className="m-3 btn btn-sm btn-danger"
           onClick={removeAllRecipes}
         >
           Remove All
-        </button>
+        </button> */}
       </div>
 
       <div className="col-md-6">
@@ -152,12 +165,16 @@ const ListRecipe = () => {
               {currentRecipe.recipeImage}
             </div>
 
-            <Link
+            <button className="badge badge-warning">
+            <Link className="link-edit-recipe"
               to={`recipe/${currentRecipe.recipeId}`}
-              className="badge badge-warning"
             >
               Edit
             </Link>
+            </button>
+            <button className="badge badge-danger" onClick={deleteRecipe}>
+            Delete
+          </button>
           </div>
         ) : (
           <div>

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import RecipeDataService from "../../apis/RecipeServices";
 import { useForm } from "react-hook-form";
-import "./Recipe.css";
+import "./css/Recipe.css";
 
 const Recipe = (props) => {
   const initialRecipeState = {
     recipeId: -1,
     recipeName: "",
     recipeDescription: "",
-    prepTime: -1,
-    cookTime: -1,
+    prepTime: 0,
+    cookTime: 0,
     recipeImage: ""
   };
 
@@ -155,7 +155,7 @@ const Recipe = (props) => {
             </div>
           </form>
 
-          <button className="badge badge-danger mr-2" onClick={deleteRecipe}>
+          <button className="badge badge-danger mr-3" onClick={deleteRecipe}>
             Delete
           </button>
 
