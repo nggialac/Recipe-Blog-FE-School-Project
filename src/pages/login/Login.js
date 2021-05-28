@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./css/Login.css";
 import PropTypes from "prop-types";
 import LoginServices from "../../apis/LoginServices";
+// import LoginComponent from "./components/LoginComponent";
+// import SignUpComponent from "./components/SignUpComponent";
 
 Login.propTypes = {
   setToken: PropTypes.func.isRequired,
@@ -16,40 +18,43 @@ export default function Login({ setToken }) {
     LoginServices.getLogin({ username, password })
       .then((response) => {
         setToken(response.data);
-        //console.log(setToken);
       })
       .catch((e) => {
         console.log(e);
       });
   };
 
-  //setToken(token);
-
   return (
     <div className="login-wrapper">
       <div className="wrapper">
-        <h1>Login</h1>
         <div>
           <form onSubmit={handleSubmit}>
-            <label>
-              <p>Username</p>
+            <h3>Sign In</h3>
+
+            <div className="form-group">
+              <label>Username</label>
               <input
-                name="username"
+                className="username form-control"
                 type="text"
                 onChange={(e) => setUserName(e.target.value)}
               />
-            </label>
-            <label>
-              <p>Password</p>
+            </div>
+
+            <div className="form-group">
+              <label>Password</label>
               <input
-                name="password"
+                className="password form-control"
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
               />
-            </label>
-            <div>
-              <button type="submit">Submit</button>
             </div>
+
+            <button type="submit" className="btn btn-primary btn-block">
+              Submit
+            </button>
+            <p className="forgot-password text-right">
+              Forgot password?
+            </p>
           </form>
         </div>
       </div>

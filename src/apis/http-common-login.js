@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL: "http://localhost:8080/api/",
+    baseURL: "http://localhost:8080/",
     //baseURL: "https://recipe-server-app.herokuapp.com/api/",
     withCredentials: false,
     headers: {
