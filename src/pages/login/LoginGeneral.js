@@ -1,61 +1,50 @@
-import React from "react";
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import Dashboard from "./../Dashboard/Dashboard";
-import Preferences from "./Preferences";
-import Login from "./Login";
-import useToken from "./useToken";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Redirect, Route } from "react-router-dom";
+import DashboardGeneral from "./../Dashboard/DashboardGeneral";
+import LoginServices from "../../apis/LoginServices";
+import axios from "axios";
+import Cookies from "js-cookie";
 
+import Login from "./Login";
+import Register from "./Register";
 import "./css/LoginGeneral.css";
 
 export default function LoginGeneral() {
-  const { token, setToken } = useToken(null);
+  const [name, setName] = useState("");
 
-  console.log(token);
-
-  if (!token) {
-    return <Login setToken={setToken} />;
-  }
+  // if(!token) {
+  //   return <Login setToken={setToken} />
+  // }
+  useEffect(() => {
+    //console.log(Cookies.get("__session"));
+    axios
+      .post("https://recipe-server-app.herokuapp.com/login/decodejwt", {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${Cookies.get("__session")}`,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE",
+          "Access-Control-Allow-Headers":
+            "Origin, X-Requested-With, Content-Type, Accept, content-type, application/json, XMLHttpRequest",
+        },
+      })
+      .then(
+        (response) => {
+          setName(response.data.fullname);
+          console.log(response);
+        },
+        (e) => {
+          console.log(e);
+        }
+      );
+  }, [name]);
 
   return (
     <BrowserRouter>
-      <div className="wrapper">
-        <h1>Application</h1>
-        <div className="App">
-          <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-            <div className="container">
-              <Link className="navbar-brand" to={"/sign-in"}>
-                positronX.io
-              </Link>
-              <div
-                className="collapse navbar-collapse"
-                id="navbarTogglerDemo02"
-              >
-                <ul className="navbar-nav ml-auto">
-                  <li className="nav-item">
-                    <Link className="nav-link" to={"/sign-in"}>
-                      Login
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to={"/sign-up"}>
-                      Sign up
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-        </div>
-
-        <Switch>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-          <Route path="/preferences">
-            <Preferences />
-          </Route>
-        </Switch>
-      </div>
+      {/* <Nav name={name} setName={setName} /> */}
+      <Route path="/dashboard" exact component={DashboardGeneral} />
+      <Route path="/login" component={Login} />
+      <Route path="/register" component={() => <Register name={name} />} />
     </BrowserRouter>
   );
 }

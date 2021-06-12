@@ -13,8 +13,6 @@ const Recipe = (props) => {
     recipeImage: ""
   };
 
-  //INITIAL HOOKS
-  //const {id: setRouteId} = useParams();
   const [currentRecipe, setCurrentRecipe] = useState({ initialRecipeState });
   const [message, setMessage] = useState("");
 
@@ -27,10 +25,6 @@ const Recipe = (props) => {
         console.log(e);
       });
   };
-
-  // useEffect(() => {
-  //   getRecipe(setRouteId);
-  // }, [setRouteId]);
 
   useEffect(() => {
     getRecipe(props.match.params.id);

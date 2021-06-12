@@ -1,3 +1,4 @@
+import http from "../apis/http-common";
 import axios from "axios";
 
 const getLogin = data => {
@@ -13,6 +14,12 @@ const getLogin = data => {
       }}).post("login", data);
 }
 
+
+// const getLogin = (data) => {
+//     return http.post("login", data);
+// }
+
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     getLogin
 };

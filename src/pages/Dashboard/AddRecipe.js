@@ -12,7 +12,7 @@ const AddRecipe = () => {
     prepTime: 0,
     recipeDescription: "",
     recipeName: "",
-    recipeImage: ""
+    recipeImage: "",
   };
 
   //INITIAL HOOKS
@@ -25,29 +25,29 @@ const AddRecipe = () => {
   };
 
   const saveRecipe = () => {
+    handleSave();
     var data = {
       cookTime: recipe.cookTime,
       prepTime: recipe.prepTime,
       recipeDescription: recipe.recipeDescription,
       recipeName: recipe.recipeName,
-      recipeImage: recipe.recipeImage
+      recipeImage: recipe.recipeImage,
     };
 
     RecipeDataService.createRecipe(data)
       .then((response) => {
-        if(response.data.recipeName !== ""){
+        if (response.data.recipeName !== "") {
           setRecipe({
             id: response.data.id,
             cookTime: response.data.cookTime,
             prepTime: response.data.prepTime,
             recipeDescription: response.data.recipeDescription,
             recipeName: response.data.recipeName,
-            recipeImage: response.data.recipeImage
+            recipeImage: response.data.recipeImage,
           });
           setSubmitted(true);
           console.log(response.data);
-        } 
-        else{
+        } else {
           alert("Input Name Recipe!");
         }
       })
@@ -115,10 +115,7 @@ const AddRecipe = () => {
   }
 
   function handleSave() {
-    //console.log(image);
-    //alert(image);
     recipe.recipeImage = image;
-    console.log(recipe.recipeImage);
   }
 
   useEffect(() => {
@@ -218,7 +215,7 @@ const AddRecipe = () => {
             />
           </div>
 
-          <div className="form-group" style={{display: 'none'}}>
+          <div className="form-group" style={{ display: "none" }}>
             <label htmlFor="recipeImage">Image</label>
             <input
               type="text"
@@ -237,7 +234,11 @@ const AddRecipe = () => {
                 Upload image (to Cloudinary)
               </h3>
               <div className="py-10">
-                <div ref={dropbox} className="upload-image" style={{display: 'block'}}>
+                <div
+                  ref={dropbox}
+                  className="upload-image"
+                  style={{ display: "block" }}
+                >
                   {image ? (
                     <>
                       <img
@@ -248,19 +249,32 @@ const AddRecipe = () => {
                       />
                       <div className="btn-upload-image flex justify-center items-center mt-2">
                         <button
-                          className=" border-2 px-4 py-2 rounded w-1/2"
+                          className=" border-2 px-4 py-2 rounded w-1/2 btn-danger"
                           onClick={handleCancel}
                           type="button"
                         >
                           Cancel
                         </button>
-                        <button
-                          className="border-2 px-4 py-2 rounded ml-2 w-1/2"
+                        {/* <button
+                          className="border-2 px-4 py-2 rounded ml-2 w-1/2 btn-info"
                           onClick={handleSave}
                           type="button"
                         >
                           Save
-                        </button>
+                        </button> */}
+                        <div className="upload-image">
+                          {image && recipe.recipeName !== "" ? (
+                            <button
+                              onClick={saveRecipe}
+                              className="btn btn-success border-2 px-4 py-2 rounded ml-2 w-1/2 btn-info"
+                              type="button"
+                            >
+                              Submit
+                            </button>
+                          ) : (
+                            <></>
+                          )}
+                        </div>
                       </div>
                     </>
                   ) : (
@@ -300,11 +314,13 @@ const AddRecipe = () => {
             </div>
           </div>
 
-          <div className="upload-image">
-            <button onClick={saveRecipe} className="btn btn-success">
-              Submit
-            </button>
-          </div>
+          {/* <div className="upload-image">
+            {image && recipe.recipeName !== "" ? (
+              <button onClick={saveRecipe} className="btn btn-success">
+                Submit
+              </button>
+            ) : (<></>)}
+          </div> */}
         </div>
       )}
     </div>

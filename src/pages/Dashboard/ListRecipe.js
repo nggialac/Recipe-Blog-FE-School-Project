@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RecipeDataService from "../../apis/RecipeServices";
 import { Link } from "react-router-dom";
-import "./css/ListRecipe.css"
+import "./css/ListRecipe.css";
 
 const ListRecipe = () => {
   //INITIAL HOOKS
@@ -32,7 +32,6 @@ const ListRecipe = () => {
   };
 
   const deleteRecipe = () => {
-    //console.log(currentRecipe.recipeId);
     RecipeDataService.removeRecipe(currentRecipe.recipeId)
       .then((response) => {
         console.log(response.data);
@@ -54,17 +53,6 @@ const ListRecipe = () => {
     setCurrentIndex(index);
   };
 
-  // const removeAllRecipes = () => {
-  //   RecipeDataService.removeAllRecipe()
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       refreshList();
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };
-
   const findByName = () => {
     RecipeDataService.findByRecipeName(searchName)
       .then((response) => {
@@ -77,113 +65,126 @@ const ListRecipe = () => {
   };
 
   return (
-    <div className="list row">
-      <div className="col-md-8">
-        <div className="input-group mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search by Recipe Name"
-            value={searchName}
-            onChange={onChangeSearchName}
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={findByName}
-            >
-              Search
-            </button>
+    <>
+      <div className="list row">
+        <div className="col-md-8">
+          <div className="input-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search by Recipe Name"
+              value={searchName}
+              onChange={onChangeSearchName}
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={findByName}
+              >
+                Search
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="col-md-6">
-        <h4>Recipes List</h4>
-        <ul className="list-group">
-          {recipes &&
-            recipes.map((recipe, index) => (
-              <li
-                className={
-                  "list-group-item " + (index === currentIndex ? "active" : "")
-                }
-                onClick={() => setActiveRecipe(recipe, index)}
-                key={index}
-              >
-                {recipe.recipeName}
-              </li>
-            ))}
-        </ul>
+        <div className="col-md-6">
+          <h4>Recipes List</h4>
+          <ul className="list-group">
+            {recipes &&
+              recipes.map((recipe, index) => (
+                <li
+                  className={
+                    "list-group-item " +
+                    (index === currentIndex ? "active" : "")
+                  }
+                  onClick={() => setActiveRecipe(recipe, index)}
+                  key={index}
+                >
+                  {recipe.recipeName}
+                </li>
+              ))}
+          </ul>
 
-        {/* <button
+          {/* <button
           className="m-3 btn btn-sm btn-danger"
           onClick={removeAllRecipes}
         >
           Remove All
         </button> */}
-      </div>
+        </div>
 
-      <div className="col-md-6">
-        {currentRecipe ? (
-          <div>
-            <h4>Recipe</h4>
+        <div className="col-md-6">
+          {currentRecipe ? (
             <div>
-              <label>
-                <strong>ID:</strong>
-              </label>{" "}
-              {currentRecipe.recipeId}
-            </div>
-            <div>
-              <label>
-                <strong>Name:</strong>
-              </label>{" "}
-              {currentRecipe.recipeName}
-            </div>
-            <div>
-              <label>
-                <strong>Description:</strong>
-              </label>{" "}
-              {currentRecipe.recipeDescription}
-            </div>
-            <div>
-              <label>
-                <strong>PrepTime</strong>
-              </label>{" "}
-              {currentRecipe.prepTime}
-            </div>
-            <div>
-              <label>
-                <strong>CookTime</strong>
-              </label>{" "}
-              {currentRecipe.cookTime}
-            </div>
-            <div>
-              <label>
-                <strong>Recipe Image</strong>
-              </label>{" "}
-              {currentRecipe.recipeImage}
-            </div>
+              <h4>Recipe</h4>
+              <div>
+                <label>
+                  <strong>ID:</strong>
+                </label>{" "}
+                {currentRecipe.recipeId}
+              </div>
+              <div>
+                <label>
+                  <strong>Name:</strong>
+                </label>{" "}
+                {currentRecipe.recipeName}
+              </div>
+              <div>
+                <label>
+                  <strong>Description:</strong>
+                </label>{" "}
+                {currentRecipe.recipeDescription}
+              </div>
+              <div>
+                <label>
+                  <strong>PrepTime</strong>
+                </label>{" "}
+                {currentRecipe.prepTime}
+              </div>
+              <div>
+                <label>
+                  <strong>CookTime</strong>
+                </label>{" "}
+                {currentRecipe.cookTime}
+              </div>
+              <div>
+                <label>
+                  <strong>Recipe Image</strong>
+                </label>{" "}
+                {currentRecipe.recipeImage}
+              </div>
 
-            <button className="badge badge-warning">
-            <Link className="link-edit-recipe"
-              to={`recipe/${currentRecipe.recipeId}`}
-            >
-              Edit
-            </Link>
-            </button>
-            <button className="badge badge-danger" onClick={deleteRecipe}>
-            Delete
-          </button>
-          </div>
-        ) : (
-          <div>
-            <br />
-            <p>Please click on a Recipe...</p>
-          </div>
-        )}
+              <button className="badge badge-warning">
+                <Link
+                  className="link-edit-recipe"
+                  to={`recipe/${currentRecipe.recipeId}`}
+                >
+                  Edit
+                </Link>
+              </button>
+              <button className="badge badge-success">
+                <Link
+                  className="link-edit-recipe"
+                  to={`recipe/steps/${currentRecipe.recipeId}`}
+                >
+                  Edit
+                </Link>
+              </button>
+              <button className="badge badge-danger" onClick={deleteRecipe}>
+                Delete
+              </button>
+              
+            </div>
+          ) : (
+            <div>
+              <br />
+              <p>Please click on a Recipe...</p>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
