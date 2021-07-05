@@ -1,50 +1,39 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter, Redirect, Route } from "react-router-dom";
-import DashboardGeneral from "./../Dashboard/DashboardGeneral";
-import LoginServices from "../../apis/LoginServices";
-import axios from "axios";
-import Cookies from "js-cookie";
+import React from "react";
+import { BrowserRouter, Route } from "react-router-dom";
+
 
 import Login from "./Login";
-import Register from "./Register";
 import "./css/LoginGeneral.css";
+import DashboardGeneral from "../Dashboard/DashboardGeneral";
 
 export default function LoginGeneral() {
-  const [name, setName] = useState("");
-
-  // if(!token) {
-  //   return <Login setToken={setToken} />
-  // }
-  useEffect(() => {
-    //console.log(Cookies.get("__session"));
-    axios
-      .post("https://recipe-server-app.herokuapp.com/login/decodejwt", {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${Cookies.get("__session")}`,
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE",
-          "Access-Control-Allow-Headers":
-            "Origin, X-Requested-With, Content-Type, Accept, content-type, application/json, XMLHttpRequest",
-        },
-      })
-      .then(
-        (response) => {
-          setName(response.data.fullname);
-          console.log(response);
-        },
-        (e) => {
-          console.log(e);
-        }
-      );
-  }, [name]);
+  // const [fullName, setFullName] = useState("");
+  // useEffect(() => {
+  //   var config = {
+  //     method: "post",
+  //     //url: "https://recipe-server-app.herokuapp.com/login/decodejwt",
+  //     url: "http://localhost:8080/login/decodejwt",
+  //     headers: {
+  //       Authorization: `Bearer ${Cookies.get("__session")}`,
+  //     },
+  //   };
+  //   axios(config)
+  //     .then((res) => {
+  //       setFullName(res.data.fullname);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // }, [fullName]);
 
   return (
     <BrowserRouter>
-      {/* <Nav name={name} setName={setName} /> */}
-      <Route path="/dashboard" exact component={DashboardGeneral} />
-      <Route path="/login" component={Login} />
-      <Route path="/register" component={() => <Register name={name} />} />
+      <Route path="">
+        <Login />
+      </Route>
+      <Route path="/dashboard">
+        <DashboardGeneral />
+      </Route>
     </BrowserRouter>
   );
 }

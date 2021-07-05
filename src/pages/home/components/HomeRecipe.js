@@ -8,7 +8,7 @@ const HomeRecipe = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    console.log(id)
+    console.log(id);
     //console.log(activeRecipe);
     getRecipe(id);
   }, [id]);
@@ -33,15 +33,8 @@ const HomeRecipe = () => {
               alt={activeRecipe.recipeName}
             />
             <h3 className="active-recipe__title">{activeRecipe.recipeName}</h3>
-            {/* <h4 className="active-recipe__publisher">
-          Publisher: <span>{recipe.publisher}</span>
-        </h4> */}
-            <p className="active-recipe__website">
-              Website:
-              {/* <span>
-            <a href={recipe.publisher_url}>{recipe.publisher_url}</a>
-          </span> */}
-            </p>
+
+            <p className="active-recipe__website">Website:</p>
             <button className="active-recipe__button">
               <Link to="/home">Go Home</Link>
             </button>

@@ -1,9 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import RecipeDataService from "../../apis/RecipeServices";
 import "./css/AddRecipe.css";
+import MultiSelect from "react-multi-select-component";
+import {
+  NEXT_PUBLIC_CLOUDINARY_CLOUDNAME,
+  NEXT_PUBLIC_CLOUDINARY_UNSIGNED_UPLOAD_PRESET,
+} from "../../config";
+import FoodCategoryService from "../../apis/FoodCategoryService";
 
-var NEXT_PUBLIC_CLOUDINARY_CLOUDNAME = "recipe-photos";
-var NEXT_PUBLIC_CLOUDINARY_UNSIGNED_UPLOAD_PRESET = "qmzji0mo";
+// var NEXT_PUBLIC_CLOUDINARY_CLOUDNAME = "recipe-photos";
+// var NEXT_PUBLIC_CLOUDINARY_UNSIGNED_UPLOAD_PRESET = "qmzji0mo";
 
 const AddRecipe = () => {
   const initialRecipeState = {
@@ -13,6 +19,26 @@ const AddRecipe = () => {
     recipeDescription: "",
     recipeName: "",
     recipeImage: "",
+    foodCategories: [],
+  };
+
+  const [category, setCategory] = useState([]);
+  const [options, setOptions] = useState([
+    { label: "Grapes 🍇", value: "grapes" },
+  ]);
+
+  const getCategoryFood = () => {
+    FoodCategoryService.getAllCategory()
+      .then((response) => {
+        //setOptions(response.data);
+        let obj = response.data.map((fc) => {
+          return { label: fc.foodCategoryName, value: fc.foodCategoryId };
+        });
+        setOptions(obj);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   //INITIAL HOOKS
@@ -26,12 +52,19 @@ const AddRecipe = () => {
 
   const saveRecipe = () => {
     handleSave();
+    var foodCate = category.map((fc) => {
+      return {
+        foodCategoryId: fc.value,
+        foodCategoryName: fc.label,
+      };
+    })
     var data = {
       cookTime: recipe.cookTime,
       prepTime: recipe.prepTime,
       recipeDescription: recipe.recipeDescription,
       recipeName: recipe.recipeName,
       recipeImage: recipe.recipeImage,
+      foodCategories: foodCate,
     };
 
     RecipeDataService.createRecipe(data)
@@ -44,6 +77,7 @@ const AddRecipe = () => {
             recipeDescription: response.data.recipeDescription,
             recipeName: response.data.recipeName,
             recipeImage: response.data.recipeImage,
+            foodCategories: response.data.foodCategories,
           });
           setSubmitted(true);
           console.log(response.data);
@@ -119,40 +153,7 @@ const AddRecipe = () => {
   }
 
   useEffect(() => {
-    let isMounted = true;
-
-    // function dragEnter(e) {
-    //   e.stopPropagation();
-    //   e.preventDefault();
-    // }
-
-    // function dragOver(e) {
-    //   e.stopPropagation();
-    //   e.preventDefault();
-    // }
-
-    // function drop(e) {
-    //   e.stopPropagation();
-    //   e.preventDefault();
-
-    //   const dt = e.dataTransfer;
-    //   const files = dt.files;
-
-    //   handleFiles(files);
-    // }
-
-    // dropbox.current.addEventListener("dragenter", dragEnter, false);
-    // dropbox.current.addEventListener("dragover", dragOver, false);
-    // dropbox.current.addEventListener("drop", drop, false);
-
-    // return () => {
-    //   dropbox.current.removeEventListener("dragenter", dragEnter);
-    //   dropbox.current.removeEventListener("dragover", dragOver);
-    //   dropbox.current.removeEventListener("drop", drop);
-    // };
-    return () => {
-      isMounted = false;
-    };
+    getCategoryFood();
   }, []);
 
   return (
@@ -215,6 +216,26 @@ const AddRecipe = () => {
             />
           </div>
 
+          <div className="form-group">
+            <label htmlFor="foodCategory">foodCategory</label>
+            <pre>
+              {JSON.stringify(
+                category.map((fc) => {
+                  return {
+                    foodCategoryId: fc.value,
+                    foodCategoryName: fc.label,
+                  };
+                })
+              )}
+            </pre>
+            <MultiSelect
+              options={options}
+              value={category}
+              onChange={setCategory}
+              labelledBy="Categories"
+            />
+          </div>
+
           <div className="form-group" style={{ display: "none" }}>
             <label htmlFor="recipeImage">Image</label>
             <input
@@ -255,13 +276,6 @@ const AddRecipe = () => {
                         >
                           Cancel
                         </button>
-                        {/* <button
-                          className="border-2 px-4 py-2 rounded ml-2 w-1/2 btn-info"
-                          onClick={handleSave}
-                          type="button"
-                        >
-                          Save
-                        </button> */}
                         <div className="upload-image">
                           {image && recipe.recipeName !== "" ? (
                             <button
@@ -313,14 +327,6 @@ const AddRecipe = () => {
               </div>
             </div>
           </div>
-
-          {/* <div className="upload-image">
-            {image && recipe.recipeName !== "" ? (
-              <button onClick={saveRecipe} className="btn btn-success">
-                Submit
-              </button>
-            ) : (<></>)}
-          </div> */}
         </div>
       )}
     </div>

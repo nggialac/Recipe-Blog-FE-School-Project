@@ -23,3 +23,8 @@
   text-decoration: none;
   color: #e1e9fc;
 }
+
+.nav-icon-right:hover{
+  text-decoration: none;
+  color: #fff;
+}

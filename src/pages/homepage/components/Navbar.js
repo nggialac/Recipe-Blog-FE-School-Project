@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import '../css/Navbar.css';
 
-function Navbar() {
+function Navbar(props) {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const [navbar, setNavbar] = useState(false);
@@ -26,7 +25,7 @@ function Navbar() {
   window.addEventListener('resize', showButton);
 
   const changeBackground = () => {
-    if(window.scrollY >= 80) {
+    if(window.scrollY >= 80 || props.isActive) {
       setNavbar(true);
     } else setNavbar(false);
   }

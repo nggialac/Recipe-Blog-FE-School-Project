@@ -1,34 +1,49 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import RecipeId from "./../Recipe";
 import RecipeList from "./../ListRecipe";
 import AddRecipe from "./../AddRecipe";
-import Dashboard from "./../Dashboard";
 import Steps from "./../Steps";
+import Course from "./../Course";
 import Sidebar from "./Sidebar";
 import "../css/Apppp.css";
+import Register from "../Register";
+import LoginGeneral from "../../login/LoginGeneral";
+import Ingredient from "../Ingredient";
+import Dashboard from "../Dashboard";
+import HomeApp from "../../homepage/page/HomeApp";
 
-export default function NavDashboard() {
+export default function NavDashboard(props) {
   return (
-    <Router>
-      {/* <Navbar />
-      <Switch>
-        <Route path="/dashboard/sidebar" />
-      </Switch> */}
+    <>
+      <Router>
+        <Sidebar />
 
-      <Sidebar />
-      <div className="container mt-3">
         <Switch>
-          <Route path="/dashboard" exact component={RecipeList}/>
-          <Route exact path={["/dashboard/recipe"]} component={RecipeList} />
+        <Route exact path="/dashboard" component={Dashboard} />
+          <Route
+            path="/dashboard/register"
+            exact
+            component={() => <Register fullName={props.fullName} />}
+          />
+          <Route exact path="/dashboard/recipe" component={RecipeList} />
           <Route exact path="/dashboard/recipe/add" component={AddRecipe} />
           <Route exact path="/dashboard/recipe/:id" component={RecipeId} />
-          <Route exact path="/dashboard/recipe/steps/:id" component={Steps} />
+          <Route
+            exact
+            path="/dashboard/recipe/:id/step-adding"
+            component={Steps}
+          />
+          <Route
+            exact
+            path="/dashboard/recipe/:id/ingredient-adding"
+            component={Ingredient}
+          />
+          <Route exact path="/dashboard/recipe/:id/course" component={Course} />
+          <Route exact path="/login" component={LoginGeneral} />
         </Switch>
-      </div>
-      <div>
-      </div>
-    </Router>
+      </Router>
+    </>
   );
 }

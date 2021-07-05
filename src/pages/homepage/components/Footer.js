@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../css/Footer.css";
-import { Button } from "./Button";
 import { Link } from "react-router-dom";
 import EmailServices from "../../../apis/EmailServices";
 import { MAIL_MES, MAIL_SUB } from "../../../config";

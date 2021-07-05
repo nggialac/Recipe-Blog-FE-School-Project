@@ -3,16 +3,74 @@ import RecipeDataService from "../../apis/RecipeServices";
 import { Link } from "react-router-dom";
 import "./css/ListRecipe.css";
 
+import { makeStyles, Button } from "@material-ui/core";
+import RecipeServices from "../../apis/RecipeServices";
+import Pagination from "@material-ui/lab/Pagination";
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+}));
+
 const ListRecipe = () => {
   //INITIAL HOOKS
-  const [recipes, setRecipes] = useState([]);
+  const classes = useStyles();
+  const [recipes, setRecipes] = useState();
   const [searchName, setSearchName] = useState("");
   const [currentRecipe, setCurrentRecipe] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
 
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
+  const [pageSize, setPageSize] = useState(3);
+
+  const pageSizes = [3, 6, 9];
+
+  const getRequestParams = (searchName, page, pageSize) => {
+    let params = {};
+
+    if (searchName) {
+      params["name"] = searchName;
+    }
+
+    if (page) {
+      params["pageNumber"] = page - 1;
+    }
+
+    if (pageSize) {
+      params["pageSize"] = pageSize;
+    }
+
+    return params;
+  };
+
+  const retrieveRecipes_Page = () =>{
+    const params = getRequestParams(searchName, page, pageSize);
+    RecipeServices.getAllRecipe_Page(params)
+    .then((response) =>{
+      const { recipes, totalPages } = response.data;
+      setRecipes(recipes);
+      setCount(totalPages);
+      console.log(response.data);
+    } )
+    .catch((e) => {
+      console.log(e);
+    })
+  }
+
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
+  const handlePageSizeChange = (event) => {
+    setPageSize(event.target.value);
+    setPage(1);
+  };
+
   useEffect(() => {
-    retrieveRecipes();
-  }, []);
+    retrieveRecipes_Page();
+  }, [page, pageSize]);
 
   //SEARCH STATE
   const onChangeSearchName = (e) => {
@@ -32,7 +90,7 @@ const ListRecipe = () => {
   };
 
   const deleteRecipe = () => {
-    RecipeDataService.removeRecipe(currentRecipe.recipeId)
+    RecipeDataService.removeRecipeWithCategory(currentRecipe.recipeId)
       .then((response) => {
         console.log(response.data);
         refreshList();
@@ -65,7 +123,7 @@ const ListRecipe = () => {
   };
 
   return (
-    <>
+    <div className="container mt-3">
       <div className="list row">
         <div className="col-md-8">
           <div className="input-group mb-3">
@@ -78,9 +136,9 @@ const ListRecipe = () => {
             />
             <div className="input-group-append">
               <button
-                className="btn btn-outline-secondary"
+                className="btn btn-secondary"
                 type="button"
-                onClick={findByName}
+                onClick={retrieveRecipes_Page}
               >
                 Search
               </button>
@@ -90,6 +148,28 @@ const ListRecipe = () => {
 
         <div className="col-md-6">
           <h4>Recipes List</h4>
+          <div className="mt-3">
+          {"Items per Page: "}
+          <select onChange={handlePageSizeChange} value={pageSize}>
+            {pageSizes.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </select>
+
+          <Pagination
+            className="my-3"
+            count={count}
+            page={page}
+            siblingCount={1}
+            boundaryCount={1}
+            variant="outlined"
+            shape="rounded"
+            onChange={handlePageChange}
+          />
+        </div>
+
           <ul className="list-group">
             {recipes &&
               recipes.map((recipe, index) => (
@@ -106,12 +186,45 @@ const ListRecipe = () => {
               ))}
           </ul>
 
-          {/* <button
-          className="m-3 btn btn-sm btn-danger"
-          onClick={removeAllRecipes}
-        >
-          Remove All
-        </button> */}
+          {currentRecipe ? (
+            <div>
+              <Link
+                className="link-edit-recipe"
+                to={{
+                  pathname: `recipe/${currentRecipe.recipeId}/ingredient-adding`,
+                  state: { name: currentRecipe.recipeName },
+                }}
+              >
+                <button className="m-3 btn btn-sm btn-success">Update Ingredients</button>
+              </Link>
+
+              <Link
+                className="link-edit-recipe"
+                to={{
+                  pathname: `recipe/${currentRecipe.recipeId}/step-adding`,
+                  state: { name: currentRecipe.recipeName },
+                }}
+              >
+                <button className="m-3 btn btn-sm btn-info">
+                  Update Steps
+                </button>
+              </Link>
+
+              <Link
+                className="link-edit-recipe"
+                to={{
+                  pathname: `recipe/${currentRecipe.recipeId}/course`,
+                  state: { name: currentRecipe.recipeName },
+                }}
+              >
+                <button className="m-3 btn btn-sm btn-warning">
+                  Update Courses
+                </button>
+              </Link>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
 
         <div className="col-md-6">
@@ -150,31 +263,43 @@ const ListRecipe = () => {
               </div>
               <div>
                 <label>
+                  <strong>Type of Food Category</strong>
+                </label>{" "}
+                {currentRecipe.foodCategories
+                  .map((fc) => {
+                    return fc.foodCategoryName;
+                  })
+                  .join(",")}
+                {/* {console.log(currentRecipe.foodCategories)} */}
+              </div>
+              <div>
+                <label>
                   <strong>Recipe Image</strong>
                 </label>{" "}
                 {currentRecipe.recipeImage}
               </div>
 
-              <button className="badge badge-warning">
+              <Button
+                className="badge badge-warning"
+                variant="contained"
+                color="primary"
+              >
                 <Link
                   className="link-edit-recipe"
                   to={`recipe/${currentRecipe.recipeId}`}
                 >
                   Edit
                 </Link>
-              </button>
-              <button className="badge badge-success">
-                <Link
-                  className="link-edit-recipe"
-                  to={`recipe/steps/${currentRecipe.recipeId}`}
-                >
-                  Edit
-                </Link>
-              </button>
-              <button className="badge badge-danger" onClick={deleteRecipe}>
+              </Button>
+              <Button
+                className="badge badge-danger"
+                onClick={deleteRecipe}
+                variant="contained"
+                color="secondary"
+                type="submit"
+              >
                 Delete
-              </button>
-              
+              </Button>
             </div>
           ) : (
             <div>
@@ -184,7 +309,7 @@ const ListRecipe = () => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

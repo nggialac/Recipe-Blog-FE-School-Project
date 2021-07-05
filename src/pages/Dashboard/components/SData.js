@@ -7,12 +7,12 @@ import * as RiIcons from 'react-icons/ri';
 export const SidebarData = [
   {
     title: 'Dashboard',
-    path: '/Dashboard',
+    path: '/dashboard',
     icon: <AiIcons.AiFillHome />,
   },
   {
     title: 'Recipes',
-    //path: '/dashboard/recipe',
+    path: '/dashboard/recipe',
     icon: <IoIcons.IoIosPaper />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
@@ -27,10 +27,9 @@ export const SidebarData = [
       {
         title: 'Adding Recipe',
         path: '/dashboard/recipe/add',
-        icon: <IoIcons.IoIosPaper />,
+        icon: <IoIcons.IoIosRocket />,
         cName: 'sub-nav'
-      },
-      
+      },      
     ]
   },
   {
@@ -39,13 +38,13 @@ export const SidebarData = [
     icon: <FaIcons.FaCartPlus />
   },
   {
-    title: 'Team',
-    path: '/team',
-    icon: <IoIcons.IoMdPeople />
+    title: 'Register',
+    path: '/dashboard/register',
+    icon: <IoIcons.IoIosPaper />
   },
   {
-    title: 'Messages',
-    path: '/messages',
+    title: 'Account',
+    path: '/dashboard/user',
     icon: <FaIcons.FaEnvelopeOpenText />,
 
     iconClosed: <RiIcons.RiArrowDownSFill />,
@@ -53,15 +52,10 @@ export const SidebarData = [
 
     subNav: [
       {
-        title: 'Message 1',
-        path: '/messages/message1',
+        title: 'Profile',
+        path: '/dashboard/user/profile',
         icon: <IoIcons.IoIosPaper />
       },
-      {
-        title: 'Message 2',
-        path: '/messages/message2',
-        icon: <IoIcons.IoIosPaper />
-      }
     ]
   },
   {

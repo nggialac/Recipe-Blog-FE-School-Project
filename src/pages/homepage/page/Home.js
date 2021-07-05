@@ -1,14 +1,18 @@
-import React from 'react';
-import '../css/HomeApp.css';
-import Cards from '../components/Cards';
-import HeroSection from '../components/HeroSection';
-import Footer from '../components/Footer';
+import React from "react";
+import "../css/HomeApp.css";
+import Navbar from "../components/Navbar";
+import Cards from "../components/Cards";
+import HeroSection from "../components/HeroSection";
+import Footer from "../components/Footer";
+import CourseCards from "../components/courseComponents/CourseCards";
 
-function Home() {
+function Home(props) {
   return (
     <>
+      <Navbar />
       <HeroSection />
-      <Cards />
+      <Cards recipes={props.recipes} />
+      <CourseCards courses={props.courses} />
       <Footer />
     </>
   );
