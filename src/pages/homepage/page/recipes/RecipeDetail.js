@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
-import "../../css/RecipeDetail.scss";
 
 const RecipeDetail = props => {
 

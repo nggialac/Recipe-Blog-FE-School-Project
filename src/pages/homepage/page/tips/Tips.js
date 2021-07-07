@@ -1,14 +1,14 @@
 import React from 'react'
 import Footer from '../../components/Footer'
 import Navbar from '../../components/Navbar'
-import RecipesMain from './RecipesMain'
+import TipsMain from './TipsMain'
 
-export default function recipes() {
+export default function Tips() {
     return (
         <div>
         {" "}
         <Navbar isActive={true} />
-        <RecipesMain />
+        <TipsMain />
         <Footer />
       </div>
     )

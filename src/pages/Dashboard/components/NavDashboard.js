@@ -13,6 +13,7 @@ import LoginGeneral from "../../login/LoginGeneral";
 import Ingredient from "../Ingredient";
 import Dashboard from "../Dashboard";
 import HomeApp from "../../homepage/page/HomeApp";
+import Tips from "../Tips";
 
 export default function NavDashboard(props) {
   return (
@@ -41,6 +42,7 @@ export default function NavDashboard(props) {
             component={Ingredient}
           />
           <Route exact path="/dashboard/recipe/:id/course" component={Course} />
+          <Route exact path="/dashboard/tips" component={Tips} />
           <Route exact path="/login" component={LoginGeneral} />
         </Switch>
       </Router>

@@ -49,8 +49,8 @@ export default function Course() {
       });
   };
 
-  const updateCourse = async () => {
-    CourseService.getAllCourse()
+  const updateCourse = async (recipeId, temp) => {
+    CourseService.updateCourseById(recipeId, temp.courseId, temp)
       .then((response) => {
         console.log(response.data);
         const {
@@ -114,14 +114,14 @@ export default function Course() {
               render={(props) => (
                 <AddCourse {...props} addCourseHandler={addCourse} recipeId={id}/>
               )}
-            />s
-
+            />
+{/* 
             <Route
               path={`/dashboard/recipe/${id}/course/edit`}
               render={(props) => (
                 <EditCourse {...props} updateCourseHandler={updateCourse} />
               )}
-            />
+            /> */}
 
             <Route path={`/dashboard/recipe/${id}/course/detail/:id`} component={CourseDetail} />
           </Switch>

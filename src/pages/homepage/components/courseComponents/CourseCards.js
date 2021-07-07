@@ -14,7 +14,7 @@ function CourseCards(props) {
                   <CourseCardItem
                     courseId={course.courseId || ""}
                     src={course.courseImage || ""}
-                    text={course.courseContent || ""}
+                    text={course.courseName || ""}
                     label="Course"
                     path={`/${course.courseId || ""}`}
                   />

@@ -40,7 +40,7 @@ const CourseList = (props) => {
           <button className="ui button pink right" >Back</button>
           </Link>
         <Link to={`/dashboard/recipe/${props.recipeId}/course/add`}>
-          <button className="ui button blue right">Add Contact</button>
+          <button className="ui button blue right">Add Course</button>
         </Link>
 
       </h2>

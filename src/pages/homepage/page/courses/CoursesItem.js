@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./CoursesItem.css";
 
 export default function CoursesItem(props) {
   return (
@@ -12,6 +13,7 @@ export default function CoursesItem(props) {
                 <img
                   className="img-fluid img-responsive rounded product-image"
                   src={course.courseImage}
+                  alt="course"
                 />
               </div>
               <div className="col-md-6 mt-1">

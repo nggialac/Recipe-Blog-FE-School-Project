@@ -15,6 +15,8 @@ import Recipes from "./recipes/Recipes";
 import RecipeDetail from "./recipes/RecipeDetail";
 import Courses from "./courses/Courses";
 import CourseDetailItem from "./courses/CourseDetailItem";
+import Tips from "./tips/Tips";
+import TipsDetailItem from "./tips/TipsDetailItem";
 
 function HomeApp() {
   const [recipes, setRecipes] = useState([]);
@@ -82,6 +84,8 @@ function HomeApp() {
           <Route path="/recipe/:recipeId" component={()=> <RecipeDetail/>} />
           <Route exact path="/courses" component={Courses} />
           <Route exact path="/courses/:id" component={CourseDetailItem} />
+          <Route exact path="/tips" component={Tips} />
+          <Route exact path="/tips/:id" component={TipsDetailItem} />
           <Route path="/products" component={Products} />
           <Route path="/sign-up" component={Signup} />
         </Switch>
