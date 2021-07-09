@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 
-
 import Login from "./Login";
 import "./css/LoginGeneral.css";
 import DashboardGeneral from "../Dashboard/DashboardGeneral";
@@ -27,13 +26,13 @@ export default function LoginGeneral() {
   // }, [fullName]);
 
   return (
-    <BrowserRouter>
+    <div>
       <Route path="">
         <Login />
       </Route>
-      <Route path="/dashboard">
-        <DashboardGeneral />
+      <Route path="/dashboard" component={DashboardGeneral}>
+        {/* <DashboardGeneral /> */}
       </Route>
-    </BrowserRouter>
+    </div>
   );
 }

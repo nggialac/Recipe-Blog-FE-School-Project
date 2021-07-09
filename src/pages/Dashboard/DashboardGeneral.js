@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
 import NavDashboard from "./components/NavDashboard";
 import Cookies from "js-cookie";
 import axios from "axios";
 
-export default function DashboardGeneral(props) {
+const DashboardGeneral = (props) => {
   const history = useHistory();
   const [fullName, setFullName] = useState("");
+  const [info, setInfo] = useState();
   const [isLogged, setIsLogged] = useState(props.isLogged);
 
   useEffect(() => {
@@ -33,6 +34,7 @@ export default function DashboardGeneral(props) {
     axios(config)
       .then((res) => {
         setFullName(res.data.fullName);
+        setInfo(res.data);
         setIsLogged(true);
       })
       .catch((e) => {
@@ -43,7 +45,9 @@ export default function DashboardGeneral(props) {
 
   return (
     <div>
-      <NavDashboard fullName={fullName} />
+      <NavDashboard fullName={fullName} info={info}/>
     </div>
   );
 }
+
+export default withRouter(DashboardGeneral);

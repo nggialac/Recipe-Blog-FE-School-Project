@@ -4,6 +4,7 @@ import {
   Switch,
   Route,
   useParams,
+  Link,
 } from "react-router-dom";
 import CourseList from "./courseComponents/CourseList";
 import CourseDetail from "./courseComponents/CourseDetail";
@@ -13,12 +14,13 @@ import CourseService from "../../apis/CourseService";
 import "./css/Course.css";
 import 'semantic-ui-css/semantic.min.css'
 
-export default function Course() {
+export default function Course(props) {
   const [courses, setCourses] = useState([]);
   const { id } = useParams();
+  const [tempParams, setTempParams] = useState({pageNumber: 0, pageSize: 10});
+  const [count, setCount] = useState();
 
   const addCourse = async (course) => {
-    console.log(course);
     const request = {
       ...course,
     };
@@ -34,23 +36,36 @@ export default function Course() {
   };
 
   useEffect(() => {
-    console.log(id);
-    retrieveCourse();
+    console.log(props);
+    retrieveCourse_Page(tempParams);
   }, []);
 
-  const retrieveCourse = async () => {
-    CourseService.getAllCourse(id)
+  // const retrieveCourse = async () => {
+  //   CourseService.getAllCourse(id)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setCourses(response.data);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // };
+
+  const retrieveCourse_Page = async (params) => {
+    setTempParams(params);
+    CourseService.getCoursesByRecipeId(id, params)
       .then((response) => {
         console.log(response.data);
-        setCourses(response.data);
+        setCourses(response.data.courses);
+        setCount(response.data.totalPages);
       })
       .catch((e) => {
         console.log(e);
       });
   };
 
-  const updateCourse = async (recipeId, temp) => {
-    CourseService.updateCourseById(recipeId, temp.courseId, temp)
+  const updateCourse = async (temp) => {
+    CourseService.updateCourseById(id, temp.courseId, temp)
       .then((response) => {
         console.log(response.data);
         const {
@@ -73,7 +88,7 @@ export default function Course() {
   };
 
   const removeCourse = async (orderId) => {
-    CourseService.removeACourseById(id, orderId)
+    CourseService.removeACourseByIdAndRecipeId(id, orderId)
       .then((response) => {
         console.log(response.data);
         let newCourseList = courses.filter((course) => {
@@ -106,6 +121,9 @@ export default function Course() {
                   courses={courses}
                   getCourseId={removeCourse}
                   recipeId={id}
+                  retrieveTipsPages={retrieveCourse_Page}
+                  count={count}
+                  locate={props.history.location.pathname}
                 />
               )}
             />
@@ -115,13 +133,13 @@ export default function Course() {
                 <AddCourse {...props} addCourseHandler={addCourse} recipeId={id}/>
               )}
             />
-{/* 
+
             <Route
               path={`/dashboard/recipe/${id}/course/edit`}
               render={(props) => (
                 <EditCourse {...props} updateCourseHandler={updateCourse} />
               )}
-            /> */}
+            />
 
             <Route path={`/dashboard/recipe/${id}/course/detail/:id`} component={CourseDetail} />
           </Switch>

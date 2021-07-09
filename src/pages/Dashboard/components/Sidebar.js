@@ -79,7 +79,7 @@ const Sidebar = () => {
             <NavIcon to="#">
               <FaIcons.FaAlignLeft onClick={showSidebar} />
             </NavIcon>
-            <NavIcon to="#">
+            <NavIcon to="/dashboard">
                RECIPE DASHBOARD
             </NavIcon>
             <NavIconRight className="nav-icon-right" onClick={logout}>

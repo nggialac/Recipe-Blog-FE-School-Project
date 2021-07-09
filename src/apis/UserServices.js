@@ -1,28 +1,14 @@
-import http from "../apis/http-common";
-// import axios from "axios";
-// import Cookies from "js-cookie";
+import http from "./http-common-login";
 
-const getUser = () => {
-  return http.get("recipe");
+const changePassword = (id, params) => {
+  return http.post(`user/${id}`, null, { params });
 };
 
-// const getName = () => {
-//   axios
-//     .get("https://recipe-server-app.herokuapp.com/login/decodejwt", {
-//       headers: {
-//         Authorization: Cookies.get("__session"),
-//       },
-//     })
-//     .then(
-//       (response) => {
-//         var response = response.data;
-//       },
-//       (error) => {
-//         var status = error.response.status;
-//       }
-//     );
-// };
+const createUser = (data) => {
+  return http.post("user", data);
+};
 
 export default {
-  getUser,
+  changePassword,
+  createUser,
 };

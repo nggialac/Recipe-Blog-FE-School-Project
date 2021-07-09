@@ -56,9 +56,9 @@ function TipsList(props) {
     <div className="main-tips">
       <h2>
         Tips List
-        <Link to={`/dashboard`}>
+        {/* <Link to={`/dashboard/tips`}>
           <button className="ui button pink right">Back</button>
-        </Link>
+        </Link> */}
         <Link to={`/dashboard/tips/add`}>
           <button className="ui button blue right">Add Tips</button>
         </Link>

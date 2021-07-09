@@ -1,9 +1,11 @@
-import React from 'react'
+import React from 'react';
+import NotFound from "./images/404.jpg";
 
 function BlankPage() {
     return (
-        <div>
+        <div className="container">
             <h1>Insert correct URL!</h1>
+            <img src={NotFound} alt="notFound" style={{height:600}}/>
         </div>
     )
 }

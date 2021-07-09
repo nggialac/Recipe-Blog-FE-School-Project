@@ -72,6 +72,7 @@ export default function Ingredient(props) {
   };
 
   const handleAddFields = (index) => {
+    console.log(index);
     const fields = [...ingredient];
     fields.splice(index + 1, 0, {
       ingredientName: "",
@@ -142,10 +143,11 @@ export default function Ingredient(props) {
   }
 
   return (
-    <div>
-      <Container>
+    <div className="container">
+      <h1>Add Ingredients</h1>
+      <Container style={{display: "flex", justifyContent: "center"}}>
         <form className={classes.root} onSubmit={async () => handleSubmit}>
-          {ingredient.map((ing, index) => (
+          {ingredient.length > 0 ? ingredient.map((ing, index) => (
             <div key={ing.ingredientId}>
               <TextField
                 variant="filled"
@@ -181,7 +183,15 @@ export default function Ingredient(props) {
                 <AddIcon />
               </IconButton>
             </div>
-          ))}
+          )):           <Button
+          className={classes.button}
+          variant="contained"
+          color="default"
+          type="submit"
+          onClick={() => handleAddFields(0)}
+        >
+          Add New Ingredient
+        </Button>}
           <Button
             className={classes.button}
             variant="contained"

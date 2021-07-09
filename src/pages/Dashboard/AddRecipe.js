@@ -167,6 +167,7 @@ const AddRecipe = () => {
         </div>
       ) : (
         <div>
+          <h1>Add Recipe</h1>
           <div className="form-group">
             <label htmlFor="recipeName">Name</label>
             <input
@@ -218,7 +219,7 @@ const AddRecipe = () => {
 
           <div className="form-group">
             <label htmlFor="foodCategory">foodCategory</label>
-            <pre>
+            {/* <pre>
               {JSON.stringify(
                 category.map((fc) => {
                   return {
@@ -227,7 +228,7 @@ const AddRecipe = () => {
                   };
                 })
               )}
-            </pre>
+            </pre> */}
             <MultiSelect
               options={options}
               value={category}

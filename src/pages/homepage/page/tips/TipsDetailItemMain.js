@@ -10,21 +10,34 @@ export default function TipsDetailItemMain(props) {
         <div class="container">
           <div class="row">
             <div class="col-md-8">
-              <div className="content">
-                <h2>Title TIps</h2>
-                <div className="tips-video">
-                  <iframe
-                    width="100%"
-                    height="315"
-                    src="https://www.youtube.com/embed/wHRXUeVsAQQ"
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-                <div className="tips-description">
-                  <h2>Description</h2>
+              <div className="card mb-4 box-shadow">
+                <div className="card-body">
+                  <div className="content">
+                    <h2>{props.tips.title}</h2>
+                    <h3>Author:{props.tips.author}</h3>
+                    <div className="tips-video">
+                      <iframe
+                        width="100%"
+                        height="315"
+                        src={`https://www.youtube.com/embed/${props.tips.video}`}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                    <div className="tips-description">
+                      <h2>Description</h2>
+                    </div>
+                    <div>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: props.tips.description,
+                        }}
+                      />
+                      {/* {props.tips.description} */}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

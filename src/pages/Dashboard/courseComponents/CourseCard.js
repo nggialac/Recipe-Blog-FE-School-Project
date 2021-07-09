@@ -17,13 +17,13 @@ const CourseCard = (props) => {
   } = props.course;
   return (
     <div className="item">
-      <img className="ui avatar image" src={user} alt="user" />
+      <img className="ui avatar image" src={courseImage} alt="course" />
       <div className="content">
         <Link
           to={{ pathname: `/dashboard/recipe/${pathId}/course/detail/${courseId}`, state: { course: props.course, recipeId: props.recipeId} }}
         >
           <div className="header">{courseName}</div>
-          <div>{courseContent}</div>
+          {/* <div>{courseContent}</div> */}
         </Link>
       </div>
       <i

@@ -2,6 +2,9 @@ import { Link, useHistory } from "react-router-dom";
 
 function CourseCardItem(props) {
   const history = useHistory();
+  function truncate(str, n){
+    return (str.length > n) ? str.substr(0, n-1) + '...' : str;
+  };
   if (props)
     return (
       <>
@@ -14,7 +17,7 @@ function CourseCardItem(props) {
               <img className="cards__item__img" alt="Travel" src={props.src} />
             </figure>
             <div className="cards__item__info">
-              <h5 className="cards__item__text">{props.text}</h5>
+              <h5 className="cards__item__text">{truncate(props.text, 19)}</h5>
             </div>
           </Link>
         </li>

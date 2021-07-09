@@ -21,7 +21,7 @@ function CourseCards(props) {
                 );
               })
             ) : (
-              <></>
+              <h2>Loading...</h2>
             )}
           </ul>
         </div>

@@ -10,7 +10,11 @@ const getCourseByCourseId = (id) => {
 };
 
 const getAllCourse_Page = (params) => {
-  return http.get("course/pagination", { params });
+  return http.get(`course/pagination`, { params });
+};
+
+const getCoursesByRecipeId = (id, params) => {
+  return http.get(`recipe/${id}/course/pagination`, { params });
 };
 
 const createCourseById = (id, data) => {
@@ -21,15 +25,21 @@ const updateCourseById = (id, orderId, data) => {
   return http.put(`recipe/${id}/course/${orderId}`, data);
 };
 
-const removeACourseById = (id, order) => {
+const removeACourseByIdAndRecipeId = (id, order) => {
   return http.delete(`recipe/${id}/course/${order}`);
+};
+
+const removeCourseById = (order) => {
+  return http.delete(`course/${order}`);
 };
 
 export default {
   getCourseByCourseId,
+  getCoursesByRecipeId,
   getAllCourse,
   getAllCourse_Page,
   createCourseById,
   updateCourseById,
-  removeACourseById,
+  removeACourseByIdAndRecipeId,
+  removeCourseById,
 };

@@ -19,32 +19,38 @@ const useStyles = makeStyles((theme) => ({
 
 const Steps = (props) => {
   const [data, setData] = useState("");
-  const [steps, setSteps] = useState({});
+  const [steps, setSteps] = useState();
   const [submitted, setSubmitted] = useState(false);
   const { id } = useParams();
   const classes = useStyles();
+  const [done, setDone] = useState(false);
 
   const handleOnChange = (e, editor) => {
     const text = editor.getData();
     setData(text);
   };
 
-  const handleSubmit = () => {saveSteps();};
+  const handleSubmit = () => {
+    saveSteps();
+  };
 
-  const handleCancel = () => {setSubmitted(true);};
+  const handleCancel = () => {
+    setSubmitted(true);
+  };
 
   useEffect(() => {
     getStepData();
-    if(submitted) {
+    if (submitted) {
       props.history.push("/dashboard/recipe");
     }
-  }, [steps, submitted]);
+  }, [submitted]);
 
-  const getStepData = () => {
+  const getStepData = async () => {
     StepServices.getStepById(id)
       .then((response) => {
-        setSteps(response.data);
-        //setData(response.data);
+        console.log(response.data);
+        if (response.data.stepsId !== null) setSteps(response.data);
+        setDone(true);
       })
       .catch((e) => {
         console.log(e);
@@ -52,18 +58,29 @@ const Steps = (props) => {
   };
 
   const saveSteps = () => {
-     var updateData = {
-      stepId: steps.stepId,
-      stepDescription: data,
-     }
-    StepServices.updateStepById(id, updateData)
-      .then((response) => {
-        alert("Update Success!")
-        setSubmitted(true);
-      })
-      .catch((e) => {
-        alert(e);
-      });
+    if (steps === null || steps === undefined) {
+      StepServices.createStepById(id, { stepDescription: data })
+        .then((res) => {
+          alert("Success!");
+          setSubmitted(true);
+        })
+        .catch((e) => {
+          alert(e);
+        });
+    } else {
+      var updateData = {
+        stepId: steps.stepId,
+        stepDescription: data,
+      };
+      StepServices.updateStepById(id, updateData)
+        .then((response) => {
+          alert("Update Success!");
+          setSubmitted(true);
+        })
+        .catch((e) => {
+          alert(e);
+        });
+    }
   };
 
   return (
@@ -76,21 +93,25 @@ const Steps = (props) => {
       </div>
       <div className="wrapper">
         <div className="form-group editor">
-          <CKEditor
-            editor={ClassicEditor}
-            data={steps.stepDescription}
-            onChange={handleOnChange}
-            onReady={(editor) => {
-              // console.log("Editor is ready to use!", editor);
-              editor.editing.view.change((writer) => {
-                writer.setStyle(
-                  "height",
-                  "340px",
-                  editor.editing.view.document.getRoot()
-                );
-              });
-            }}
-          ></CKEditor>
+          {done ? (
+            <CKEditor
+              editor={ClassicEditor}
+              data={steps.stepDescription}
+              onChange={handleOnChange}
+              onReady={(editor) => {
+                // console.log("Editor is ready to use!", editor);
+                editor.editing.view.change((writer) => {
+                  writer.setStyle(
+                    "height",
+                    "340px",
+                    editor.editing.view.document.getRoot()
+                  );
+                });
+              }}
+            />
+          ) : (
+            <h1>Loading...</h1>
+          )}
         </div>
         <div className="form-group">
           <Button

@@ -7,8 +7,11 @@ import SearchGeneral from "./pages/home/SearchGeneral";
 import HomeRecipe from "./pages/home/components/HomeRecipe";
 import HomeApp from "./pages/homepage/page/HomeApp";
 
-// import BlankPage from "./pages/blankpage/BlankPage";
+import BlankPage from "./pages/blankpage/BlankPage";
 import RecipeList from "./pages/Dashboard/ListRecipe";
+import Recipes from "./pages/homepage/page/recipes/Recipes";
+import Tips from "./pages/homepage/page/tips/Tips";
+import AboutUs from "./pages/homepage/page/AboutUs";
 
 function App() {
   return (
@@ -29,17 +32,29 @@ function App() {
           {/* <Route exact path="/dashboard/recipe">
             <RecipeList />
           </Route> */}
-        </Switch>
-        <Switch>
           <Route exact path="/login">
             <LoginGeneral />
           </Route>
         </Switch>
         <Switch>
-          <Route exact path="/" component={HomeApp}/>
+          <Route exact path="/">
+            <HomeApp />
+          </Route>
+          <Route exact path="/*">
+            <HomeApp />
+          </Route>
+          {/* <Route exact path="/recipe">
+            <Recipes />
+          </Route>
+          <Route exact path="/tips">
+            <Tips />
+          </Route>
+          <Route exact path="/about-us">
+            <AboutUs />
+          </Route> */}
         </Switch>
         {/* <Switch>
-          <Route path="*" component={BlankPage}/>
+          <Route path="/*" component={BlankPage} />
         </Switch> */}
       </BrowserRouter>
     </div>

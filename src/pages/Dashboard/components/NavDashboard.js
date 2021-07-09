@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  withRouter,
+} from "react-router-dom";
 
 import RecipeId from "./../Recipe";
 import RecipeList from "./../ListRecipe";
@@ -12,25 +17,40 @@ import Register from "../Register";
 import LoginGeneral from "../../login/LoginGeneral";
 import Ingredient from "../Ingredient";
 import Dashboard from "../Dashboard";
-import HomeApp from "../../homepage/page/HomeApp";
 import Tips from "../Tips";
+import User from "../User";
+import ChangePassword from "../userComponents/ChangePassword";
+import CreateUser from "../userComponents/CreateUser";
+import FoodCategory from "../FoodCategory";
 
-export default function NavDashboard(props) {
+const NavDashboard = (props) => {
   return (
     <>
       <Router>
         <Sidebar />
 
         <Switch>
-        <Route exact path="/dashboard" component={Dashboard} />
-          <Route
-            path="/dashboard/register"
-            exact
-            component={() => <Register fullName={props.fullName} />}
-          />
-          <Route exact path="/dashboard/recipe" component={RecipeList} />
-          <Route exact path="/dashboard/recipe/add" component={AddRecipe} />
-          <Route exact path="/dashboard/recipe/:id" component={RecipeId} />
+          <Route exact path="/dashboard" component={Dashboard}>
+            {/* <Dashboard /> */}
+          </Route>
+          <Route path="/dashboard/user" exact>
+            <User info={props.info} />
+          </Route>
+          <Route path="/dashboard/user/changepw" exact>
+            <ChangePassword info={props.info} />
+          </Route>
+          <Route path="/dashboard/user/create" exact>
+            <CreateUser info={props.info} />
+          </Route>
+          <Route exact path="/dashboard/recipe">
+            <RecipeList />
+          </Route>
+          <Route exact path="/dashboard/recipe/add">
+            <AddRecipe />
+          </Route>
+          <Route exact path="/dashboard/recipe/:id" component={RecipeId}>
+            {/* <RecipeId /> */}
+          </Route>
           <Route
             exact
             path="/dashboard/recipe/:id/step-adding"
@@ -42,10 +62,19 @@ export default function NavDashboard(props) {
             component={Ingredient}
           />
           <Route exact path="/dashboard/recipe/:id/course" component={Course} />
-          <Route exact path="/dashboard/tips" component={Tips} />
-          <Route exact path="/login" component={LoginGeneral} />
+          <Route exact path="/dashboard/tips">
+            <Tips />
+          </Route>
+          <Route exact path="/dashboard/fc">
+            <FoodCategory />
+          </Route>
+          <Route exact path="/login" >
+          <LoginGeneral/>
+          </Route>
         </Switch>
       </Router>
     </>
   );
-}
+};
+
+export default withRouter(NavDashboard);

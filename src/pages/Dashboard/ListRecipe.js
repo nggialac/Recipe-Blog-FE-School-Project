@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import RecipeDataService from "../../apis/RecipeServices";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import "./css/ListRecipe.css";
 
 import { makeStyles, Button } from "@material-ui/core";
@@ -45,19 +45,19 @@ const ListRecipe = () => {
     return params;
   };
 
-  const retrieveRecipes_Page = () =>{
+  const retrieveRecipes_Page = () => {
     const params = getRequestParams(searchName, page, pageSize);
     RecipeServices.getAllRecipe_Page(params)
-    .then((response) =>{
-      const { recipes, totalPages } = response.data;
-      setRecipes(recipes);
-      setCount(totalPages);
-      console.log(response.data);
-    } )
-    .catch((e) => {
-      console.log(e);
-    })
-  }
+      .then((response) => {
+        const { recipes, totalPages } = response.data;
+        setRecipes(recipes);
+        setCount(totalPages);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const handlePageChange = (event, value) => {
     setPage(value);
@@ -78,16 +78,16 @@ const ListRecipe = () => {
     setSearchName(searchName);
   };
 
-  const retrieveRecipes = () => {
-    RecipeDataService.getAllRecipe()
-      .then((response) => {
-        setRecipes(response.data);
-        console.log(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+  // const retrieveRecipes = () => {
+  //   RecipeDataService.getAllRecipe()
+  //     .then((response) => {
+  //       setRecipes(response.data);
+  //       console.log(response.data);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // };
 
   const deleteRecipe = () => {
     RecipeDataService.removeRecipeWithCategory(currentRecipe.recipeId)
@@ -101,7 +101,8 @@ const ListRecipe = () => {
   };
 
   const refreshList = () => {
-    retrieveRecipes();
+    // retrieveRecipes();
+    retrieveRecipes_Page();
     setCurrentRecipe(null);
     setCurrentIndex(-1);
   };
@@ -149,26 +150,26 @@ const ListRecipe = () => {
         <div className="col-md-6">
           <h4>Recipes List</h4>
           <div className="mt-3">
-          {"Items per Page: "}
-          <select onChange={handlePageSizeChange} value={pageSize}>
-            {pageSizes.map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            ))}
-          </select>
+            {"Items per Page: "}
+            <select onChange={handlePageSizeChange} value={pageSize}>
+              {pageSizes.map((size) => (
+                <option key={size} value={size}>
+                  {size}
+                </option>
+              ))}
+            </select>
 
-          <Pagination
-            className="my-3"
-            count={count}
-            page={page}
-            siblingCount={1}
-            boundaryCount={1}
-            variant="outlined"
-            shape="rounded"
-            onChange={handlePageChange}
-          />
-        </div>
+            <Pagination
+              className="my-3"
+              count={count}
+              page={page}
+              siblingCount={1}
+              boundaryCount={1}
+              variant="outlined"
+              shape="rounded"
+              onChange={handlePageChange}
+            />
+          </div>
 
           <ul className="list-group">
             {recipes &&
@@ -195,7 +196,9 @@ const ListRecipe = () => {
                   state: { name: currentRecipe.recipeName },
                 }}
               >
-                <button className="m-3 btn btn-sm btn-success">Update Ingredients</button>
+                <button className="m-3 btn btn-sm btn-success">
+                  Update Ingredients
+                </button>
               </Link>
 
               <Link
@@ -217,7 +220,7 @@ const ListRecipe = () => {
                   state: { name: currentRecipe.recipeName },
                 }}
               >
-                <button className="m-3 btn btn-sm btn-warning">
+                <button className="m-3 btn btn-sm btn-warning" style={{color: "#fff"}}>
                   Update Courses
                 </button>
               </Link>
@@ -278,19 +281,18 @@ const ListRecipe = () => {
                 </label>{" "}
                 {currentRecipe.recipeImage}
               </div>
-
-              <Button
-                className="badge badge-warning"
-                variant="contained"
-                color="primary"
+              <Link
+                className="link-edit-recipe"
+                to={`recipe/${currentRecipe.recipeId}`}
               >
-                <Link
-                  className="link-edit-recipe"
-                  to={`recipe/${currentRecipe.recipeId}`}
+                <Button
+                  className="badge badge-warning"
+                  variant="contained"
+                  color="primary"
                 >
                   Edit
-                </Link>
-              </Button>
+                </Button>
+              </Link>
               <Button
                 className="badge badge-danger"
                 onClick={deleteRecipe}
@@ -313,4 +315,4 @@ const ListRecipe = () => {
   );
 };
 
-export default ListRecipe;
+export default withRouter(ListRecipe);

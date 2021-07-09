@@ -15,7 +15,7 @@ export default function TipsCardItem(props) {
                 <img
                   className="cards__item__img"
                   alt="Travel"
-                  src={`https://img.youtube.com/vi/${props.video}/0.jpg`}
+                  src={`https://img.youtube.com/vi/${props.src}/0.jpg`}
                 />
               </div>
             </figure>

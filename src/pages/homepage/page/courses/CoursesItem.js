@@ -17,13 +17,15 @@ export default function CoursesItem(props) {
                 />
               </div>
               <div className="col-md-6 mt-1">
-                <h5>{course.courseName}</h5>
+                <h2>{course.courseName}</h2>
                 <div className="d-flex flex-row">
                   <span>{course.courseCreatedate}</span>
                 </div>
 
                 <p className="text-justify text-truncate para mb-0">
-                  {course.courseContent}
+                  {/* {course.courseContent} */}
+                  <h4>Categories:</h4>
+                  <h4>Recipes:</h4>
                 </p>
               </div>
               <div className="align-items-center align-content-center col-md-3 border-left mt-1">
@@ -31,7 +33,7 @@ export default function CoursesItem(props) {
                   <h4 className="mr-1">$13.99</h4>
                   <span className="strike-text">$20.99</span>
                 </div> */}
-                <div className="d-flex flex-column mt-4">
+                <div className="d-flex mt-4">
                   <Link to={`/courses/${course.courseId}`}>
                   <button className="btn btn-primary btn-sm" type="button">
                     Details

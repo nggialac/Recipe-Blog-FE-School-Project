@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 
-import Services from "./Services";
-import Products from "./Products";
-import Signup from "./Signup";
+import AboutUs from "./AboutUs";
 import Home from "./Home";
 
 import "../css/HomeApp.css";
@@ -86,8 +84,8 @@ function HomeApp() {
           <Route exact path="/courses/:id" component={CourseDetailItem} />
           <Route exact path="/tips" component={Tips} />
           <Route exact path="/tips/:id" component={TipsDetailItem} />
-          <Route path="/products" component={Products} />
-          <Route path="/sign-up" component={Signup} />
+          <Route path="/about-us" component={AboutUs} />
+          {/* <Route path="/sign-up" component={Signup} /> */}
         </Switch>
       </Router>
     </>

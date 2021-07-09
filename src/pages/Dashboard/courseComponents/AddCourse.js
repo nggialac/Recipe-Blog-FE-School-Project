@@ -101,7 +101,7 @@ const AddCourse = (props) => {
       return;
     }
     props.addCourseHandler(course);
-    props.history.push(props.match.path);
+    props.history.push(`/dashboard/recipe/${props.recipeId}/course`);
   };
 
   useEffect(() => {
@@ -193,16 +193,6 @@ const AddCourse = (props) => {
         </div>
         <div className="field">
           <h4>Content</h4>
-          {/* <TextField
-            required
-            label="Required"
-            type="text"
-            name="courseContent"
-            placeholder="Content"
-            value={course.courseContent}
-            onChange={handleChangeInput}
-          /> */}
-
           <div className="form-group editor">
             <CKEditor
               editor={ClassicEditor}

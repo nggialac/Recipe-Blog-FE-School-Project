@@ -27,7 +27,7 @@ export default function TipsDetailItem() {
       //   https://www.skillshare.com/browse/cooking
       <div>
         <Navbar isActive={true} />
-        <TipsDetailItemMain tips={tips} />
+        {tips ? <TipsDetailItemMain tips={tips} /> : <></>}
         <Footer />
       </div>
     );

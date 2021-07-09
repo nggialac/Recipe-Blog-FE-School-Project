@@ -34,16 +34,16 @@ export default function Tips() {
     retrieveTipsPage(tempParams);
   }, []);
 
-  const retrieveTips = async () => {
-    TipsServices.getAllTips()
-      .then((response) => {
-        console.log(response.data);
-        setTips(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+  // const retrieveTips = async () => {
+  //   TipsServices.getAllTips()
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setTips(response.data);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // };
 
   const retrieveTipsPage = async (params) => {
     setTempParams(params);
@@ -103,7 +103,13 @@ export default function Tips() {
               path={`/dashboard/tips`}
               exact
               render={(props) => (
-                <TipsList {...props} tips={tips} retrieveTipsPages={retrieveTipsPage} getTipsId={removeCourse} count={count}/>
+                <TipsList
+                  {...props}
+                  tips={tips}
+                  retrieveTipsPages={retrieveTipsPage}
+                  getTipsId={removeCourse}
+                  count={count}
+                />
               )}
             />
             <Route
@@ -121,6 +127,8 @@ export default function Tips() {
             />
 
             <Route path={`/dashboard/tips/detail/:id`} component={TipsDetail} />
+
+            {/* <Route path={"/dashboard"}><DashboardGeneral/></Route> */}
           </Switch>
         </Router>
       </div>
