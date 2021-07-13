@@ -10,22 +10,25 @@ const RecipeDetail = (props) => {
   const { recipeId } = useParams();
   const [recipeDetail, setRecipeDetail] = useState([]);
   const [ingredient, setIngredient] = useState([]);
+  const [cardHeight, setCardHeight] = useState(1000);
 
-  const getHightElement = () => {
-    const height = document.getElementById('container').clientHeight;
-    this.setState({ height });
-  }
+  // const getHightElement = () => {
+  //   // const height = document.getElementById('container').clientHeight;
+  //   setCardHeight(ref.current.clientHeight);
+  // }
 
   useEffect(() => {
     getRecipeById(recipeId);
     getIngredientById(recipeId);
-  }, []);
+    console.log(cardHeight);
+  }, [cardHeight]);
 
   const getRecipeById = (id) => {
     RecipeServices.getRecipeByIdWithCategory(id)
       .then((response) => {
         console.log(response.data);
         setRecipeDetail(response.data);
+        if(document.getElementById('card-rdi').clientHeight) setCardHeight(document.getElementById('card-rdi').clientHeight);
       })
       .catch((e) => {
         alert(e);
@@ -37,6 +40,7 @@ const RecipeDetail = (props) => {
       .then((response) => {
         console.log(response.data);
         setIngredient(response.data);
+        if(document.getElementById('card-rdi').clientHeight) setCardHeight(document.getElementById('card-rdi').clientHeight);
       })
       .catch((e) => {
         alert(e);
@@ -47,14 +51,14 @@ const RecipeDetail = (props) => {
     <div>
       <Navbar isActive={true} />
       <div className="recipe-bg">
-        <img className="rd-bg" src={recipeDetail.recipeImage} alt="background"/>
+        <img className="rd-bg" src={recipeDetail.recipeImage} alt="background" style={{height: `${cardHeight + 140}px`}}/>
         </div>
       <div className="recipe-detail">
 
         
         <div className="card-recipe-body">
           {recipeDetail ? (
-            <div class="card-rd">
+            <div id="card-rdi" class="card-rd">
               <div class="card__title-box card--title">
                 <h2>{recipeDetail.recipeName}</h2>
               </div>

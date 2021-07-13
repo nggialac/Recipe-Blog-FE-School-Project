@@ -23,8 +23,8 @@ const Recipe = (props) => {
   const [currentRecipe, setCurrentRecipe] = useState({ initialRecipeState });
   const [message, setMessage] = useState("");
   const [selected, setSelected] = useState([]);
-  const [options, setOptions] = useState([]);
-//
+  const [options, setOptions] = useState();
+  //
   const [image, setImage] = useState("");
   const [progress, setProgress] = useState(0);
   const fileSelect = useRef(null);
@@ -64,11 +64,14 @@ const Recipe = (props) => {
       console.log(Math.round((e.loaded * 100.0) / e.total));
     });
 
-    xhr.onreadystatechange = (e) => { 
+    xhr.onreadystatechange = (e) => {
       if (xhr.readyState === 4 && xhr.status === 200) {
         const response = JSON.parse(xhr.responseText);
         setImage(response.secure_url);
-        setCurrentRecipe({...currentRecipe, recipeImage: response.secure_url});
+        setCurrentRecipe({
+          ...currentRecipe,
+          recipeImage: response.secure_url,
+        });
         console.log(response.secure_url);
       }
     };
@@ -78,16 +81,19 @@ const Recipe = (props) => {
     fd.append("file", file);
     xhr.send(fd);
   }
-//
+  //
   const getCategoryFood = () => {
     FoodCategoryService.getAllCategory()
       .then((response) => {
         console.log(response.data);
-        setOptions(response.data);
-        let obj = response.data.map((fc) => {
+        // setOptions(response.data);
+        // let obj = response.data.map((fc) => {
+        //   return { label: fc.foodCategoryName, value: fc.foodCategoryId };
+        // });
+        // console.log(obj);
+        setOptions(response.data.map((fc) => {
           return { label: fc.foodCategoryName, value: fc.foodCategoryId };
-        });
-        setOptions(obj);
+        }));
       })
       .catch((e) => {
         console.log(e);
@@ -129,6 +135,7 @@ const Recipe = (props) => {
         foodCategoryName: fc.label,
       };
     });
+
     var data = {
       cookTime: currentRecipe.cookTime,
       prepTime: currentRecipe.prepTime,
@@ -233,78 +240,80 @@ const Recipe = (props) => {
                 onChange={handleInputChange}
               />
             </div>
-            <div className="form-group">
-              <div>
-                {/* <pre>{JSON.stringify(selected)}</pre> */}
-                <MultiSelect
-                  options={options}
-                  value={selected}
-                  onChange={setSelected}
-                  labelledBy="Select"
-                />
-              </div>
-            </div>
-            <div className="form-group">
-            <div className="field">
-          <h4>Image</h4>
-          <div style={{ justifyContent: "center", textAlign: "center" }}>
-            <div
-              ref={dropbox}
-              className="upload-image center"
-              style={{ display: "inline-block" }}
-            >
-              {image ? (
-                <>
-                  <img
-                    alt=""
-                    className="rounded-lg center"
-                    src={image.replace("upload/", "upload/w_600/")}
-                    style={{ height: 350, width: 600 }}
+            {options ? (
+              <div className="form-group">
+                <div>
+                  {/* <pre>{JSON.stringify(selected)}</pre> */}
+                  <MultiSelect
+                    value={selected}
+                    options={options}
+                    onChange={setSelected}
+                    labelledBy="Select"
                   />
-                  <div className="btn-upload-image flex justify-center items-center mt-2">
-                    <button
-                      className=" border-2 px-4 py-2 rounded w-1/2 btn-danger"
-                      onClick={handleCancel}
-                      type="button"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <div
-                  className="bg-gray-200 border-4 border-dashed border-gray-400 rounded-lg"
-                >
-                  <form className="flex justify-center items-center h-full">
-                    {progress === 0 ? (
-                      <div className="text-gray-700 text-center ">
-                        <button
-                          className="btn btn-primary"
-                          onClick={handleImageUpload}
-                          type="button"
-                        >
-                          Browse
-                        </button>
-                      </div>
+                </div>
+              </div>
+            ) : (
+              <h3>NULL</h3>
+            )}
+            <div className="form-group">
+              <div className="field">
+                <h4>Image</h4>
+                <div style={{ justifyContent: "center", textAlign: "center" }}>
+                  <div
+                    ref={dropbox}
+                    className="upload-image center"
+                    style={{ display: "inline-block" }}
+                  >
+                    {image ? (
+                      <>
+                        <img
+                          alt=""
+                          className="rounded-lg center"
+                          src={image.replace("upload/", "upload/w_600/")}
+                          style={{ height: 350, width: 600 }}
+                        />
+                        <div className="btn-upload-image flex justify-center items-center mt-2">
+                          <button
+                            className=" border-2 px-4 py-2 rounded w-1/2 btn-danger"
+                            onClick={handleCancel}
+                            type="button"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </>
                     ) : (
-                      <div className="flex justify-center items-center">
-                        <span className="text-gray-700">{progress}%</span>
+                      <div className="bg-gray-200 border-4 border-dashed border-gray-400 rounded-lg">
+                        <form className="flex justify-center items-center h-full">
+                          {progress === 0 ? (
+                            <div className="text-gray-700 text-center ">
+                              <button
+                                className="btn btn-primary"
+                                onClick={handleImageUpload}
+                                type="button"
+                              >
+                                Browse
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="flex justify-center items-center">
+                              <span className="text-gray-700">{progress}%</span>
+                            </div>
+                          )}
+
+                          <input
+                            ref={fileSelect}
+                            type="file"
+                            accept="image/*"
+                            style={{ display: "none" }}
+                            onChange={(e) => handleFiles(e.target.files)}
+                          />
+                        </form>
                       </div>
                     )}
-
-                    <input
-                      ref={fileSelect}
-                      type="file"
-                      accept="image/*"
-                      style={{ display: "none" }}
-                      onChange={(e) => handleFiles(e.target.files)}
-                    />
-                  </form>
+                  </div>
                 </div>
-              )}
-            </div>
-          </div>
-        </div>
+              </div>
             </div>
           </form>
 
@@ -318,6 +327,14 @@ const Recipe = (props) => {
             onClick={updateRecipe}
           >
             Update
+          </button>
+
+          <button
+            style={{ marginLeft: "10px", color: "white" }}
+            className="badge badge-warning mr-3"
+            onClick={() => props.history.push("/dashboard/recipe")}
+          >
+            Go back
           </button>
           <p>{message}</p>
         </div>

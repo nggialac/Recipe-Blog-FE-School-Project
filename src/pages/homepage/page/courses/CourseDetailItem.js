@@ -9,10 +9,12 @@ import CourseDetailItemMain from "./CourseDetailItemMain";
 export default function CourseDetailItem() {
   const { id } = useParams();
   const [course, setCourse] = useState({});
+  const [difCourse, setDifCourse] = useState();
 
   useEffect(() => {
     getCourseById(id);
-  }, []);
+    getCourseDifId();
+  }, [id]);
 
   const getCourseById = (id) => {
     CourseService.getCourseByCourseId(id)
@@ -24,11 +26,26 @@ export default function CourseDetailItem() {
         alert(e);
       });
   };
+
+  const getCourseDifId = (id) => {
+    CourseService.getAllCourse_Page({name: null, pageNumber: 0, pageSize: 6})
+      .then((response) => {
+        console.log(response.data);
+        // let temp = response.data.content.filter((data)=>{
+        //   // if(data.courseId !== id && data.courseId !== 0) 
+        //   return data !== course;
+        // })
+        setDifCourse(response.data.content);
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  };
   return (
     //   https://www.skillshare.com/browse/cooking
     <div>
       <Navbar isActive={true} />
-      <CourseDetailItemMain course={course} />
+      <CourseDetailItemMain course={course} difCourse={difCourse}/>
       <Footer />
     </div>
   );

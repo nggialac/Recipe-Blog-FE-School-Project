@@ -1,6 +1,7 @@
 import React from "react";
 import { start } from "@popperjs/core";
 import image from "./images/image.jpg";
+import {Link} from "react-router-dom";
 import "./CourseDetailItem.css";
 
 export default function CourseDetailItemMain(props) {
@@ -17,7 +18,7 @@ export default function CourseDetailItemMain(props) {
                 objectFit: "cover",
                 // backgroundSize:"cover",
                 objectPosition: "center",
-                backgroundRepeat: "inherit"
+                backgroundRepeat: "inherit",
               }}
             >
               {/* <div class="mask">
@@ -40,13 +41,38 @@ export default function CourseDetailItemMain(props) {
                 <div className="col-md-8">
                   <div className="card mb-4 box-shadow">
                     <div className="card-body">
-                      {props.course.courseContent}
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: props.course.courseContent,
+                        }}
+                      />
+                      {/* {props.course.courseContent} */}
                       <div className="d-flex justify-content-between align-items-center">
                         <small className="text-muted">
-                          {props.course.courseCreateDate}
+                          {props.course.createDate}
                         </small>
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="card mb-4 box-shadow">
+                    <h3>List course of recipe</h3>
+                    <ul>
+                      {console.log(props.difCourse)}
+                    {props.difCourse
+                      ? props.difCourse.map((data) => {
+                          if (data.courseId !== props.course.courseId)
+                            return (
+                              <Link to={`/courses/${data.courseId}`}>
+                                <li>
+                                  <h3 style={{marginTop: "6px"}} >{data.courseName}</h3>
+                                </li>
+                              </Link>
+                            );
+                        })
+                      : ""}
+                    </ul>
                   </div>
                 </div>
               </div>

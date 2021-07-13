@@ -52,7 +52,7 @@ export default function TipsDetailItemMain(props) {
                             return (
                               <Link to={`/tips/${data.tipsId}`}>
                                 <li>
-                                  <h3>{data.title}</h3>
+                                  <h3 style={{marginTop: "6px"}}>{data.title}</h3>
                                 </li>
                               </Link>
                             );
