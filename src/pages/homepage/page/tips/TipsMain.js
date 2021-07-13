@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import TipsServices from "../../../../apis/TipsServices";
 import Pagination from "@material-ui/lab/Pagination";
 import TipsCards from "../../components/tipsComponents/TipsCards";
+import img from "./img/tips-bg.jpg";
 
 export default function TipsMain() {
   const [tips, setTips] = useState([]);
@@ -57,6 +58,18 @@ export default function TipsMain() {
 
   return (
     <div>
+      <div
+        class="p-5 text-center bg-image rounded-3 jump"
+        // style={{ backgroundImage: "url(" + image + ")" }}
+        style={{
+          backgroundImage: "url(" + img + ")",
+          objectFit: "cover",
+          // backgroundSize:"cover",
+          objectPosition: "center",
+          backgroundRepeat: "inherit",
+        }}
+      ></div>
+      <h1 className="pagesize-bar">Check out these TIPS!</h1>
       <div className="d-flex justify-content-center">
         <div className="mt-3">
           {"Items per Page: "}
@@ -68,6 +81,25 @@ export default function TipsMain() {
             ))}
           </select>
 
+          {/* <Pagination
+            className="my-3"
+            count={count}
+            page={page}
+            siblingCount={1}
+            boundaryCount={1}
+            variant="outlined"
+            shape="rounded"
+            onChange={handlePageChange}
+          /> */}
+        </div>
+      </div>
+
+      <div className="list-recipes">
+        <TipsCards tips={tips} />
+      </div>
+
+      <div className="d-flex justify-content-center">
+        <div className="mt-3">
           <Pagination
             className="my-3"
             count={count}
@@ -79,10 +111,6 @@ export default function TipsMain() {
             onChange={handlePageChange}
           />
         </div>
-      </div>
-
-      <div className="list-recipes">
-        <TipsCards tips={tips} />
       </div>
     </div>
   );

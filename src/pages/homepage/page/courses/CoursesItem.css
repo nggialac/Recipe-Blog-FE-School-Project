@@ -2,3 +2,9 @@
     height: 200px;
     object-fit: cover
 }
+
+.course-items-hover:hover{
+    width: 110%;
+    height: 110%;
+    /* transition: width 2s, height 4s; */
+}

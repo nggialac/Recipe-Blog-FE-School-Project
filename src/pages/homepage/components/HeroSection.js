@@ -10,10 +10,10 @@ function HeroSection() {
       <video autoPlay loop muted>
         <source src={video1} type="video/mp4" />
       </video>
-      <h1>ADVENTURE AWAITS</h1>
-      <p>What are you waiting for?</p>
+      <h1 style={{fontSize: "5rem", marginTop: "50px",  fontStyle: "italic"}}>“A recipe has no soul. You as the cook must bring soul to the recipe.”</h1>
+      <p style={{marginTop: "100px", fontStyle: "italic"}}>Thomas Keller</p>
       <div className="hero-btns">
-        <Button
+        {/* <Button
           className="btns"
           buttonStyle="btn--outline"
           buttonSize="btn--large"
@@ -26,7 +26,7 @@ function HeroSection() {
           buttonSize="btn--large"
         >
           WATCH TRAILER <i className="far fa-play-circle" />
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

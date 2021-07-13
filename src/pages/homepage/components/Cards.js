@@ -4,7 +4,7 @@ import CardItem from "./CardItem";
 function Cards(props) {
   return (
     <div className="cards">
-      <h1>Check out these RECIPES!</h1>
+      <h1 style={{paddingTop: "100px", marginTop: "100px"}}>Check out these RECIPES!</h1>
       <div className="cards__container">
         <div className="cards__wrapper">
           <ul className="cards__items row">

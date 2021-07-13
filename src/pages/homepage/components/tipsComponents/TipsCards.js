@@ -5,7 +5,6 @@ import TipsCardItem from "./TipsCardItem";
 export default function TipsCards(props) {
   return (
     <div className="cards">
-      <h1>Check out these TIPS!</h1>
       <div className="cards__container">
         <div className="cards__wrapper">
           <ul className="cards__items row">

@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import RecipeServices from "../../../../apis/RecipeServices";
 import Pagination from "@material-ui/lab/Pagination";
 import "./RecipesMain.css";
-import Cards from "../../components/Cards";
+import Cards from "./CardRecipes";
+import img from "./images/recipe-bg1.jpg";
 
 export default function RecipesMain() {
   const [recipes, setRecipes] = useState([]);
@@ -54,11 +55,23 @@ export default function RecipesMain() {
 
   useEffect(() => {
     getCourses();
-  }, []);
+  }, [page, pageSize]);
 
   return (
     <div>
-      <div className="d-flex justify-content-center">
+      <div
+        class="p-5 text-center bg-image rounded-3 jump"
+        // style={{ backgroundImage: "url(" + image + ")" }}
+        style={{
+          backgroundImage: "url(" + img + ")",
+          objectFit: "cover",
+          // backgroundSize:"cover",
+          objectPosition: "center",
+          backgroundRepeat: "inherit",
+        }}
+      ></div>
+      <h1 className="pagesize-bar">Check out these RECIPES!</h1>
+      <div className="d-flex justify-content-center align-items-center">
         <div className="mt-3">
           {"Items per Page: "}
           <select onChange={handlePageSizeChange} value={pageSize}>
@@ -69,6 +82,24 @@ export default function RecipesMain() {
             ))}
           </select>
 
+          {/* <Pagination
+            className="my-3"
+            count={count}
+            page={page}
+            siblingCount={1}
+            boundaryCount={1}
+            variant="outlined"
+            shape="rounded"
+            onChange={handlePageChange}
+          /> */}
+        </div>
+      </div>
+
+      <div className="list-recipes">
+        <Cards recipes={recipes} />
+      </div>
+      <div className="d-flex justify-content-center">
+        <div className="mt-3">
           <Pagination
             className="my-3"
             count={count}
@@ -80,10 +111,6 @@ export default function RecipesMain() {
             onChange={handlePageChange}
           />
         </div>
-      </div>
-
-      <div className="list-recipes">
-        <Cards recipes={recipes}/>
       </div>
     </div>
   );

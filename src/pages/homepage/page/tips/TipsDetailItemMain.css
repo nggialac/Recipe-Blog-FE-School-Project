@@ -16,3 +16,16 @@
 .tips-description {
     margin-top: 50px;
 }
+
+.tips-content{
+  border-radius: 2%;
+  background-color: lightblue;
+  border-color: black;
+  margin-bottom: 20px;
+}
+
+.tips-side{
+  border-radius: 2%;
+  /* background-color: lavender; */
+  margin-bottom: 20px;
+}

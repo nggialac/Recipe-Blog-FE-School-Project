@@ -1,6 +1,10 @@
 .cards {
-    padding: 6rem;
+    padding: 0;
     background: #fff;
+  }
+
+  .pagesize-bar{
+    background-color: azure;
   }
   
   h1 {
@@ -120,3 +124,37 @@
     }
   }
   
+  /* tips cards */
+  .tips-card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+    transition: transform .2s;
+  }
+  
+  .price {
+    color: grey;
+    font-size: 22px;
+  }
+  
+  .tips-card button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #195c90;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+  
+  .tips-card button:hover {
+    opacity: 0.8;
+  }
+
+  .tips-card:hover {
+    transform: scale(1.1);
+  }

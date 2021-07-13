@@ -1,59 +1,115 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import IngredientService from "../../../../apis/IngredientService";
+import RecipeServices from "../../../../apis/RecipeServices";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
+import "./RecipeDetail.scss";
 
-const RecipeDetail = props => {
-
+const RecipeDetail = (props) => {
+  const { recipeId } = useParams();
   const [recipeDetail, setRecipeDetail] = useState([]);
+  const [ingredient, setIngredient] = useState([]);
 
-  useEffect(()=>{
-    console.log(props);
-  })
+  const getHightElement = () => {
+    const height = document.getElementById('container').clientHeight;
+    this.setState({ height });
+  }
+
+  useEffect(() => {
+    getRecipeById(recipeId);
+    getIngredientById(recipeId);
+  }, []);
+
+  const getRecipeById = (id) => {
+    RecipeServices.getRecipeByIdWithCategory(id)
+      .then((response) => {
+        console.log(response.data);
+        setRecipeDetail(response.data);
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  };
+
+  const getIngredientById = (id) => {
+    IngredientService.getAllIngredientById(id)
+      .then((response) => {
+        console.log(response.data);
+        setIngredient(response.data);
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  };
 
   return (
     <div>
       <Navbar isActive={true} />
-      <div>
-        <div class="recipe-card">
-          <div className="image-recipe"></div>
-          <div class="recipe-card__body">
-            <h1 class="recipe-card__heading">Oatmeal Cookies</h1>
-            <h2 class="recipe-card__subhead">
-              Crunchy around the edges, softer in the center, these oatmeal
-              cookies feature the nutty taste and nubbly texture of oats.{" "}
-            </h2>
+      <div className="recipe-bg">
+        <img className="rd-bg" src={recipeDetail.recipeImage} alt="background"/>
+        </div>
+      <div className="recipe-detail">
 
-            <ul class="recipe-card__nav">
-              <li>
-                <h3 class="active">Ingredients</h3>
-              </li>
-              <li>
-                <h3>Method</h3>
-              </li>
-            </ul>
+        
+        <div className="card-recipe-body">
+          {recipeDetail ? (
+            <div class="card-rd">
+              <div class="card__title-box card--title">
+                <h2>{recipeDetail.recipeName}</h2>
+              </div>
 
-            <ul class="recipe-card__ingredients">
-              <li>&frac14; cup unsalted butter</li>
-              <li>&frac14; cup vegetable shortening</li>
-              <li>&frac12; cup light brown sugar</li>
-              <li>&frac14; cup granulated sugar</li>
-              <li>1 teaspoon vanilla extract</li>
-              <li>1 &frac14; teaspoons ground cinnamon</li>
-              <li>&#8539; teaspoon ground nutmeg</li>
-              <li>1/2 teaspoon salt</li>
-              <li>1 teaspoon cider or white vinegar*</li>
-              <li>1 large egg</li>
-              <li>&frac12; teaspoon baking soda</li>
-              <li>&frac34; cup All-Purpose Flour</li>
-              <li>1 &frac12; cups rolled oats</li>
-              <li>1 cup golden raisins, optional</li>
-            </ul>
-          </div>
+              <div class="card__image--wrapper">
+                <span class="card__food-type card--title">
+                  {recipeDetail.foodCategories
+                    ? recipeDetail.foodCategories
+                        .map((fc) => {
+                          return fc.foodCategoryName;
+                        })
+                        .join(", ")
+                    : ""}
+                </span>
+                <img
+                  src={recipeDetail.recipeImage}
+                  alt=""
+                  class="card__image"
+                />
+              </div>
+              <div class="card__ingredients" style={{ marginTop: "16px" }}>
+                <h3 class="card--title">Cooking Time</h3>
+                <ul class="card_ingredients--wrapper">
+                  <li>Cooking: {recipeDetail.prepTime} minutes</li>
+                  <li>Prepare: {recipeDetail.cookTime} minutes</li>
+                </ul>
+              </div>
+              <div class="card__ingredients">
+                <h3 class="card--title">Ingredients</h3>
+                <ul class="card_ingredients--wrapper">
+                  {ingredient ? (
+                    ingredient.map((ig) => {
+                      return <li>{ig.ingredientName} {ig.ingredientQuantity} {ig.measurement}</li>;
+                    })
+                  ) : (
+                    <div></div>
+                  )}
+                </ul>
+              </div>
+
+              <div class="card__directions">
+                <h3 class="card--title">Description</h3>
+                <p>
+                  {recipeDetail.recipeDescription}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <h1>0 Record</h1>
+          )}
         </div>
       </div>
       <Footer />
     </div>
   );
-}
+};
 
 export default RecipeDetail;

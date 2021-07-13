@@ -1,16 +1,16 @@
 import React from "react";
 import "./TipsDetailItemMain.css";
+import { Route, Link } from "react-router-dom";
 
 export default function TipsDetailItemMain(props) {
   return (
-    <div>
+    <div key={props.tips.tipsId}>
       {console.log(props)}
-      <header></header>
       <main>
         <div class="container">
           <div class="row">
-            <div class="col-md-8">
-              <div className="card mb-4 box-shadow">
+            <div class="col-md-8 tips-content">
+              <div className="mb-4 box-shadow">
                 <div className="card-body">
                   <div className="content">
                     <h2>{props.tips.title}</h2>
@@ -41,8 +41,26 @@ export default function TipsDetailItemMain(props) {
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
-              <h2>This is advisor</h2>
+            <div class="col-md-4 tips-side">
+              <div className="mb-4 box-shadow">
+                <div className="card-body">
+                  <h2>Some tips another: </h2>
+                  <ul>
+                    {props.anotherTips
+                      ? props.anotherTips.map((data) => {
+                          if (data.tipsId !== props.tips.tipsId)
+                            return (
+                              <Link to={`/tips/${data.tipsId}`}>
+                                <li>
+                                  <h3>{data.title}</h3>
+                                </li>
+                              </Link>
+                            );
+                        })
+                      : ""}
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
