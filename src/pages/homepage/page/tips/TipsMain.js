@@ -12,6 +12,11 @@ export default function TipsMain() {
   const [searchName, setSearchName] = useState();
   const pageSizes = [5, 10, 20];
 
+  const onChangeSearchName = (e) => {
+    const searchName = e.target.value;
+    setSearchName(searchName);
+  };
+
   const getRequestParams = (searchName, page, pageSize) => {
     let params = {};
 
@@ -38,7 +43,7 @@ export default function TipsMain() {
     setPage(1);
   };
 
-  const getCourses = () => {
+  const getTips = () => {
     const params = getRequestParams(searchName, page, pageSize);
     TipsServices.getAllTips_Page(params)
       .then((response) => {
@@ -53,7 +58,7 @@ export default function TipsMain() {
   };
 
   useEffect(() => {
-    getCourses();
+    getTips();
   }, [page, pageSize]);
 
   return (
@@ -70,7 +75,7 @@ export default function TipsMain() {
         }}
       ></div>
       <h1 className="pagesize-bar">Check out these TIPS!</h1>
-      <div className="d-flex justify-content-center">
+      <div className="d-flex justify-content-center" style={{ marginTop: "10px", marginBottom: "10px" }}>
         <div className="mt-3">
           {"Items per Page: "}
           <select onChange={handlePageSizeChange} value={pageSize}>
@@ -91,6 +96,28 @@ export default function TipsMain() {
             shape="rounded"
             onChange={handlePageChange}
           /> */}
+        </div>
+      </div>
+      <div className="d-flex justify-content-center align-items-center">
+        <div className="col-md-4">
+          <div className="input-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search by Recipe Name"
+              value={searchName}
+              onChange={onChangeSearchName}
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-secondary"
+                type="button"
+                onClick={getTips}
+              >
+                Search
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import user from "../images/user.jpg";
 
 const CourseDetail = (props) => {
-  const { courseName, courseContent } = props.location.state.course;
+  const { courseName, courseContent, courseImage } = props.location.state.course;
 
   useEffect(() => {
     // console.log(props);
@@ -11,13 +11,13 @@ const CourseDetail = (props) => {
 
   return (
     <div className="main">
-      <div className="ui card centered">
+      <div className="ui card card-cdt centered">
         <div className="image">
-          <img src={user} alt="user" />
+          <img src={courseImage} alt="user" />
         </div>
         <div className="content">
           <div className="header">{courseName}</div>
-          <div className="description">{courseContent}</div>
+          <div className="description" dangerouslySetInnerHTML={{ __html: courseContent }}></div>
         </div>
       </div>
       <div className="center-div">

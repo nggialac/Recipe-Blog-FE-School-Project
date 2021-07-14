@@ -5,9 +5,9 @@ import TipsCardItem from "./TipsCardItem";
 export default function TipsCards(props) {
   return (
     <div className="cards">
-      <div className="cards__container">
-        <div className="cards__wrapper">
-          <ul className="cards__items row">
+      <div className="container">
+        {/* <div className="cards__wrapper">  */}
+          <ul className="row">
             {props.tips ? (
               props.tips.map((tips) => {
                 return (
@@ -25,8 +25,8 @@ export default function TipsCards(props) {
               <></>
             )}
           </ul>
-        </div>
-      </div>
+        {/* </div> */}
+      </div> 
     </div>
   );
 }

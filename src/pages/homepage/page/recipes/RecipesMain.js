@@ -13,6 +13,11 @@ export default function RecipesMain() {
   const [searchName, setSearchName] = useState();
   const pageSizes = [5, 10, 20];
 
+  const onChangeSearchName = (e) => {
+    const searchName = e.target.value;
+    setSearchName(searchName);
+  };
+
   const getRequestParams = (searchName, page, pageSize) => {
     let params = {};
 
@@ -46,7 +51,7 @@ export default function RecipesMain() {
         let temp = response.data.recipes;
         setRecipes(temp);
         setCount(response.data.totalPages);
-        // console.log(response.data);
+        console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
@@ -70,10 +75,13 @@ export default function RecipesMain() {
           backgroundRepeat: "inherit",
         }}
       ></div>
-      <h1 className="pagesize-bar">Check out these RECIPES!</h1>
-      <div className="d-flex justify-content-center align-items-center">
-        <div className="mt-3">
-          {"Items per Page: "}
+      <h1 className="pagesize-bar">Get your RECIPES!</h1>
+      <div className=" justify-content-center align-items-center">
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ marginTop: "10px", marginBottom: "10px" }}
+        >
+          {"Items per Page:"}
           <select onChange={handlePageSizeChange} value={pageSize}>
             {pageSizes.map((size) => (
               <option key={size} value={size}>
@@ -81,6 +89,18 @@ export default function RecipesMain() {
               </option>
             ))}
           </select>
+        </div>
+      </div>
+      <div className="d-flex justify-content-center align-items-center">
+        <div className="col-md-4">
+          {/* {"Items per Page:"}
+          <select onChange={handlePageSizeChange} value={pageSize}>
+            {pageSizes.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </select> */}
 
           {/* <Pagination
             className="my-3"
@@ -92,6 +112,24 @@ export default function RecipesMain() {
             shape="rounded"
             onChange={handlePageChange}
           /> */}
+          <div className="input-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search by Recipe Name"
+              value={searchName}
+              onChange={onChangeSearchName}
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-secondary"
+                type="button"
+                onClick={getCourses}
+              >
+                Search
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 

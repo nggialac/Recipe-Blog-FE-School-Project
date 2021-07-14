@@ -13,12 +13,14 @@ import AddCourse from "./courseComponents/AddCourse";
 import CourseService from "../../apis/CourseService";
 import "./css/Course.css";
 import 'semantic-ui-css/semantic.min.css'
+import ListRecipe from "./ListRecipe";
 
 export default function Course(props) {
   const [courses, setCourses] = useState([]);
   const { id } = useParams();
   const [tempParams, setTempParams] = useState({pageNumber: 0, pageSize: 10});
   const [count, setCount] = useState();
+  // const [temp, setTemp] = useState();
 
   const addCourse = async (course) => {
     const request = {
@@ -37,6 +39,7 @@ export default function Course(props) {
 
   useEffect(() => {
     console.log(props);
+    // console.log(props.history.location.pathname);
     retrieveCourse_Page(tempParams);
   }, []);
 
@@ -142,7 +145,11 @@ export default function Course(props) {
             />
 
             <Route path={`/dashboard/recipe/${id}/course/detail/:id`} component={CourseDetail} />
+            <Route exact path={`/dashboard/recipe`} component={ListRecipe}></Route>
           </Switch>
+
+          
+
         </Router>
       </div>
     </div>

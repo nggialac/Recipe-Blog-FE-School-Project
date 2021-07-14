@@ -8,7 +8,7 @@ export default function TipsCardItem(props) {
   if (props)
     return (
       <>
-        <li className="cards__item col-3">
+        <li className="cards__item col-md-3">
           {/* <Link className="cards__item__link" to={`/tips/${props.tipsId}`}>
             <figure
               className="cards__item__pic-wrap"

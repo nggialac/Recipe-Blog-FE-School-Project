@@ -58,16 +58,16 @@ const CourseList = (props) => {
     <div className="main-course">
       <h2>
         Course List
-        {/* <Link to={`/dashboard/recipe`}>
+        {/* <Link to={`/dashboard/recipe`}> */}
           <button className="ui button pink right" onClick={()=>props.history.goBack()}>Back</button>
-          </Link> */}
+          {/* </Link> */}
         <Link to={`/dashboard/recipe/${props.recipeId}/course/add`}>
           <button className="ui button blue right">Add Course</button>
         </Link>
 
       </h2>
       <div className="ui celled list">
-        {props.courses.map((course) => {
+        {props.courses.length > 0 ? props.courses.map((course) => {
           return (
             <CourseCard
               course={course}
@@ -76,7 +76,7 @@ const CourseList = (props) => {
               recipeId={props.recipeId}
             />
           );
-        })}
+        }): <h1>Empty!</h1>}
         ;
       </div>
 

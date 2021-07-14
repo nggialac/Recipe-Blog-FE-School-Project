@@ -1,4 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
+
+.img-au{
+  height: 500px;
+}
+
 .about-us {
   margin-top: 10px;
 }
