@@ -47,7 +47,7 @@ const Recipe = (props) => {
   }
 
   function handleCancel() {
-    setImage(null);
+    setImage('');
     setProgress(0);
   }
 

@@ -31,9 +31,10 @@ export default function Ingredient(props) {
   const [ingredient, setIngredient] = useState([]);
   const [firstData, setFirstData] = useState([]);
   const [submitted, setSubmitted] = useState(false);
+  const [count, setCount] = useState(0);
 
-  const handleChangeInput = (id, event) => {
-    const values = ingredient.map((i) => {
+  const handleChangeInput = (id, event, stt) => {
+    const values = ingredient.map((i, index) => {
       if (id === i.ingredientId) {
         i[event.target.name] = event.target.value;
       }
@@ -43,7 +44,7 @@ export default function Ingredient(props) {
   };
 
   const handleSubmit = async (e) => {
-
+    e.preventDefault();
     let tempFirstDataId = [];
     firstData.map((ing) => {
       tempFirstDataId.push(ing["ingredientId"]);
@@ -53,32 +54,47 @@ export default function Ingredient(props) {
       tempDataId.push(ing["ingredientId"]);
     });
     let removeList = tempFirstDataId.filter((e) => !tempDataId.includes(e));
-    removeList.map(orderId => {
-      removeIngredient(orderId);
-    })
+    removeList.map((orderId) => {
+      return removeIngredient(orderId);
+    });
 
     ingredient.map((ing, index) => {
-      if (ing.ingredientId !== undefined)
+      if (
+        ing.ingredientId !== undefined &&
+        ing.ingredientName !== "" &&
+        ing.ingredientQuantity > 0 &&
+        ing.measurement !== ""
+      )
         updateIngredient(ing.ingredientId, ing);
-      else if (ing.ingredientId === undefined) createIngredient(ing);
+      else if (
+        ing.ingredientId === undefined &&
+        ing.ingredientName !== "" &&
+        ing.ingredientQuantity > 0 &&
+        ing.measurement !== ""
+      )
+        createIngredient(ing);
+      else alert("Failed!");
     });
     // let checker = (arr, target) => target.every(v => arr.includes(v));
 
+    //setCount(0);
     setSubmitted(true);
   };
 
   const handleCancel = () => {
-    setSubmitted(true);
+    props.history.push(`/dashboard/recipe`);
   };
 
   const handleAddFields = (index) => {
     console.log(index);
     const fields = [...ingredient];
     fields.splice(index + 1, 0, {
+      // ingredientId: 9999,
       ingredientName: "",
       ingredientQuantity: 0,
       measurement: "",
     });
+    setCount(1);
     setIngredient(fields);
     console.log(ingredient);
   };
@@ -95,9 +111,15 @@ export default function Ingredient(props) {
 
   useEffect(() => {
     getIngredient();
-    console.log(ingredient);
-    if (submitted) {
-      props.history.push("/dashboard/recipe");
+    // if (submitted) {
+    // props.history.push(`/dashboard/recipe/${id}/ingredient-adding`);
+    // alert("success!");
+    // props.history.push(`/dashboard/recipe`);
+    
+    if (submitted) 
+    {
+      setCount(0);
+      setSubmitted(false);
     }
   }, [submitted]);
 
@@ -112,86 +134,105 @@ export default function Ingredient(props) {
       });
   };
 
-  const createIngredient = (data) => {
+  const createIngredient = async (data) => {
     IngredientService.createIngredientById(id, data)
       .then((response) => {
         console.log(response);
+        // alert("success!");
       })
       .catch((e) => {
         alert(e);
       });
   };
 
-  const updateIngredient = (orderId, data) => {
+  const updateIngredient = async (orderId, data) => {
     IngredientService.updateIngredientById(id, orderId, data)
       .then((response) => {
         console.log(response);
+        // alert("success!");
       })
       .catch((e) => {
         alert(e);
       });
   };
 
-  const removeIngredient = (orderId) => {
+  const removeIngredient = async (orderId) => {
     IngredientService.removeAIngredientById(id, orderId)
-    .then((response)=>{
-      console.log(response);
-    })
-    .catch((e) => {
-      alert(e);
-    })
-  }
+      .then((response) => {
+        console.log(response);
+        // alert("success!");
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  };
 
   return (
     <div className="container">
       <h1>Add Ingredients</h1>
-      <Container style={{display: "flex", justifyContent: "center"}}>
+      <Container style={{ display: "flex", justifyContent: "center" }}>
         <form className={classes.root} onSubmit={async () => handleSubmit}>
-          {ingredient.length > 0 ? ingredient.map((ing, index) => (
-            <div key={ing.ingredientId}>
-              <TextField
-                variant="filled"
-                label="Name"
-                name="ingredientName"
-                type="text"
-                value={ing.ingredientName}
-                onChange={(event) => handleChangeInput(ing.ingredientId, event)}
-                required
-              />
-              <TextField
-                variant="filled"
-                label="Quantity"
-                name="ingredientQuantity"
-                type="number"
-                value={ing.ingredientQuantity}
-                onChange={(event) => handleChangeInput(ing.ingredientId, event)}
-                required
-              />
-              <TextField
-                variant="filled"
-                label="Measurement"
-                name="measurement"
-                type="text"
-                value={ing.measurement}
-                onChange={(event) => handleChangeInput(ing.ingredientId, event)}
-                required
-              />
-              <IconButton onClick={() => handleRemoveFields(ing.ingredientId)}>
-                <RemoveIcon />
-              </IconButton>
-              <IconButton onClick={() => handleAddFields(index)}>
-                <AddIcon />
-              </IconButton>
-            </div>
-          )):           <Button
-          className={classes.button}
-          variant="contained"
-          color="default"
-          type="submit"
-          onClick={() => handleAddFields(0)}
-        >
-          Add New Ingredient
-        </Button>}
+          {ingredient.length > 0 ? (
+            ingredient.map((ing, index) => (
+              <div key={ing.ingredientId}>
+                <TextField
+                  variant="filled"
+                  label="Name"
+                  name="ingredientName"
+                  type="text"
+                  value={ing.ingredientName}
+                  onChange={(event) =>
+                    handleChangeInput(ing.ingredientId, event, index)
+                  }
+                  required
+                />
+                <TextField
+                  variant="filled"
+                  label="Quantity"
+                  name="ingredientQuantity"
+                  type="number"
+                  value={ing.ingredientQuantity}
+                  onChange={(event) =>
+                    handleChangeInput(ing.ingredientId, event, index)
+                  }
+                  required
+                />
+                <TextField
+                  variant="filled"
+                  label="Measurement"
+                  name="measurement"
+                  type="text"
+                  value={ing.measurement}
+                  onChange={(event) =>
+                    handleChangeInput(ing.ingredientId, event, index)
+                  }
+                  required
+                />
+                <IconButton
+                  onClick={() => handleRemoveFields(ing.ingredientId)}
+                >
+                  <RemoveIcon />
+                </IconButton>
+                {count === 0 ? (
+                  <IconButton onClick={() => handleAddFields(index)}>
+                    <AddIcon />
+                  </IconButton>
+                ) : (
+                  <div>{console.log(count)}</div>
+                )}
+              </div>
+            ))
+          ) : (
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="default"
+              type="submit"
+              onClick={() => handleAddFields(-1)}
+            >
+              Add New Ingredient
+            </Button>
+          )}
           <Button
             className={classes.button}
             variant="contained"

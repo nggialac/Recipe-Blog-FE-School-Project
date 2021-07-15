@@ -140,12 +140,12 @@ export default function Course(props) {
             <Route
               path={`/dashboard/recipe/${id}/course/edit`}
               render={(props) => (
-                <EditCourse {...props} updateCourseHandler={updateCourse} />
+                <EditCourse {...props} updateCourseHandler={updateCourse} recipeId={id}/>
               )}
             />
 
             <Route path={`/dashboard/recipe/${id}/course/detail/:id`} component={CourseDetail} />
-            <Route exact path={`/dashboard/recipe`} component={ListRecipe}></Route>
+            {/* <Route exact path={`/dashboard/recipe`} component={ListRecipe}></Route> */}
           </Switch>
 
           

@@ -59,7 +59,7 @@ const CourseList = (props) => {
       <h2>
         Course List
         {/* <Link to={`/dashboard/recipe`}> */}
-          <button className="ui button pink right" onClick={()=>props.history.goBack()}>Back</button>
+          {/* <button className="ui button pink right" onClick={()=>props.history.goBack()}>Back</button> */}
           {/* </Link> */}
         <Link to={`/dashboard/recipe/${props.recipeId}/course/add`}>
           <button className="ui button blue right">Add Course</button>

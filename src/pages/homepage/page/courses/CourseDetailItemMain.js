@@ -39,7 +39,7 @@ export default function CourseDetailItemMain(props) {
               </div>
               <div className="row">
                 <div className="col-md-8">
-                  <div className="card mb-4 box-shadow">
+                  <div className="card mb-4 box-shadow c-card">
                     <div className="card-body">
                       <div
                         dangerouslySetInnerHTML={{

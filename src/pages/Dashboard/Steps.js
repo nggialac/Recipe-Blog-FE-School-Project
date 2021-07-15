@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 const Steps = (props) => {
   const [data, setData] = useState("");
   const [steps, setSteps] = useState();
+  const [temp, setTemp] = useState();
   const [submitted, setSubmitted] = useState(false);
   const { id } = useParams();
   const classes = useStyles();
@@ -93,7 +94,7 @@ const Steps = (props) => {
       </div>
       <div className="wrapper">
         <div className="form-group editor">
-          {done ? (
+          {steps ? (
             <CKEditor
               editor={ClassicEditor}
               data={steps.stepDescription}
@@ -110,7 +111,21 @@ const Steps = (props) => {
               }}
             />
           ) : (
-            <h1>Loading...</h1>
+            <CKEditor
+              editor={ClassicEditor}
+              data={temp}
+              onChange={handleOnChange}
+              onReady={(editor) => {
+                // console.log("Editor is ready to use!", editor);
+                editor.editing.view.change((writer) => {
+                  writer.setStyle(
+                    "height",
+                    "340px",
+                    editor.editing.view.document.getRoot()
+                  );
+                });
+              }}
+            />
           )}
         </div>
         <div className="form-group">

@@ -23,9 +23,7 @@ const AddRecipe = () => {
   };
 
   const [category, setCategory] = useState([]);
-  const [options, setOptions] = useState([
-    { label: "Grapes 🍇", value: "grapes" },
-  ]);
+  const [options, setOptions] = useState();
 
   const getCategoryFood = () => {
     FoodCategoryService.getAllCategory()
@@ -217,7 +215,7 @@ const AddRecipe = () => {
             />
           </div>
 
-          <div className="form-group">
+          {options ? <div className="form-group">
             <label htmlFor="foodCategory">foodCategory</label>
             {/* <pre>
               {JSON.stringify(
@@ -235,7 +233,7 @@ const AddRecipe = () => {
               onChange={setCategory}
               labelledBy="Categories"
             />
-          </div>
+          </div>: <h2>fail</h2>}
 
           <div className="form-group" style={{ display: "none" }}>
             <label htmlFor="recipeImage">Image</label>

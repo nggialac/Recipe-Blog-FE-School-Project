@@ -16,9 +16,9 @@ export default function AboutUs() {
       <div className="about-us">
         <img src={creative} alt="backgroundimg" className="img-au"/>
         <div className="container">
-          <div className="intro">
-            <h1>THANKS FOR VISITED MY WEBSITE</h1>
-            <h1>NEED TO CONTACT US? DETAILS ARE BELOW!</h1>
+          <div className="intro justify-content-center">
+            <h1 style={{fontFamily: `'Lobster', cursive`, fontSize: "4rem"}}>THANKS FOR VISITED MY WEBSITE</h1>
+            <h2 style={{marginTop: "18px", fontFamily: `'Lobster', cursive`, fontSize: "3rem", textAlign: "center"}}>NEED TO CONTACT US? DETAILS ARE BELOW!</h2>
           </div>
           <div className="row">
             <div className="col-md-4 col-sm-6">

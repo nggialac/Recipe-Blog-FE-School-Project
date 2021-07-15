@@ -25,7 +25,7 @@ export default function AddFc(props) {
       return;
     }
     props.addFcHandler(fc);
-    // props.history.push(props.match.path);
+    props.history.push('/dashboard/fc');
   };
 
   useEffect(() => {
