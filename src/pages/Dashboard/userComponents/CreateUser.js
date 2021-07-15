@@ -51,9 +51,10 @@ export default function CreateUser() {
     UserServices.createUser(data)
       .then((res) => {
         console.log(res);
+        alert("Success!")
       })
       .catch((e) => {
-        console.log(e);
+        alert("Cannot create new account! Try login again.");
       });
   };
 

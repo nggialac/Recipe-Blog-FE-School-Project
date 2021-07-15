@@ -37,9 +37,10 @@ export default function ChangePassword(props) {
     UserServices.changePassword(props.info.userId, params)
       .then((response) => {
         console.log(response.data);
+        alert("Success!");
       })
       .catch((e) => {
-        console.log(e);
+        alert("Cannot change your password! Try login again.");
       });
   };
 
@@ -59,7 +60,7 @@ export default function ChangePassword(props) {
               <TextField
                 label="Old Pass"
                 name="oldpass"
-                type="text"
+                type="password"
                 value={oldPass}
                 onChange={(e) => setOldPass(e.target.value)}
                 required
@@ -70,7 +71,7 @@ export default function ChangePassword(props) {
               <TextField
                 label="New Pass"
                 name="newpass"
-                type="text"
+                type="password"
                 value={newPass}
                 onChange={(e) => setNewPass(e.target.value)}
                 required
