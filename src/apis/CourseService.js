@@ -13,6 +13,10 @@ const getAllCourse_Page = (params) => {
   return http.get(`course/pagination`, { params });
 };
 
+const getAllCourse_Page_Desc = (params) => {
+  return http.get(`course/pagination/desc`, { params });
+};
+
 const getCoursesByRecipeId = (id, params) => {
   return http.get(`recipe/${id}/course/pagination`, { params });
 };
@@ -37,6 +41,7 @@ export default {
   getCourseByCourseId,
   getCoursesByRecipeId,
   getAllCourse,
+  getAllCourse_Page_Desc,
   getAllCourse_Page,
   createCourseById,
   updateCourseById,

@@ -8,6 +8,10 @@ const getAllRecipe_Page = (params) => {
   return http.get("recipe/pagination", {params});
 }
 
+const getAllRecipe_Page_Desc = (params) => {
+  return http.get("recipe/pagination/desc", {params});
+}
+
 const getRecipeById = id => {
     return http.get(`recipe/${id}`);
   };
@@ -48,9 +52,11 @@ const getRecipeByIdWithCategory = id =>{
     return http.get(`recipe/recipename?name=${name}`);
   };
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     getAllRecipe,
     getAllRecipe_Page,
+    getAllRecipe_Page_Desc,
     getRecipeById,
     getRecipeByIdWithCategory,
     createRecipe,

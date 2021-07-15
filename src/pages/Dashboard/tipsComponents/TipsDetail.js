@@ -6,7 +6,7 @@ export default function TipsDetail(props) {
   return (
     <div>
       <div className="main">
-        <div className="ui card centered">
+        <div className="ui centered" style={{textAlign: "center"}}>
           <div className="image">
             {/* <img src={``} alt="video" /> */}
             <iframe
@@ -21,7 +21,7 @@ export default function TipsDetail(props) {
           </div>
           <div className="content">
             <div className="header">{tips.title}</div>
-            <div className="description">{tips.description}</div>
+            <div className="description" dangerouslySetInnerHTML={{ __html: tips.description }}></div>
           </div>
         </div>
         <div className="center-div">

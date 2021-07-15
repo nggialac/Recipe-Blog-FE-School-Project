@@ -45,7 +45,7 @@ function HomeApp() {
 
   const getRecipes = () => {
       const params = getRequestParams(1, 8);
-      RecipeDataService.getAllRecipe_Page(params)
+      RecipeDataService.getAllRecipe_Page_Desc(params)
       .then((response) =>{
         const { recipes, totalPages } = response.data;
         setRecipes(recipes);
@@ -58,7 +58,7 @@ function HomeApp() {
 
   const getCourses = () => {
     const params = getRequestParams(1, 8);
-    CourseService.getAllCourse_Page(params)
+    CourseService.getAllCourse_Page_Desc(params)
     .then((response) =>{
       setCourses(response.data.content);
       console.log(response.data);

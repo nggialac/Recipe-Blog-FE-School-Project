@@ -12,6 +12,7 @@ import EditTips from "./tipsComponents/EditTips";
 export default function FoodCategory() {
   const [fc, setFc] = useState([]);
   const [tempParams, setTempParams] = useState();
+  const [count, setCount] = useState();
 
   const addFc = async (data) => {
     const request = {
@@ -29,12 +30,25 @@ export default function FoodCategory() {
       });
   };
 
-  const retrieveFc = async () => {
-    // setTempParams();
-    FoodCategoryService.getAllCategory()
+  // const retrieveFc = async () => {
+  //   // setTempParams();
+  //   FoodCategoryService.getAllCategory()
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setFc(response.data);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // };
+
+    const retrieveFc_Page = async (params) => {
+    setTempParams(params);
+    FoodCategoryService.getAllCategory_Page(params)
       .then((response) => {
         console.log(response.data);
-        setFc(response.data);
+        setFc(response.data.fcList);
+        setCount(response.data.totalPages);
       })
       .catch((e) => {
         console.log(e);
@@ -76,7 +90,7 @@ export default function FoodCategory() {
 
   useEffect(() => {
     // retrieveTips();
-    retrieveFc(tempParams);
+    retrieveFc_Page(tempParams);
   }, []);
 
   return (
@@ -97,9 +111,9 @@ export default function FoodCategory() {
                 <FcList
                   {...props}
                   fc={fc}
-                  retrieveFc={retrieveFc}
+                  retrieveFc={retrieveFc_Page}
                   getFcId={removeFc}
-                  //   count={count}
+                  count={count}
                 />
               )}
             />

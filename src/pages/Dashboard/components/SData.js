@@ -21,7 +21,7 @@ export const SidebarData = [
       {
         title: "List Recipe",
         path: "/dashboard/recipe",
-        icon: <IoIcons.IoIosPaper />,
+        icon: <IoIcons.IoIosListBox />,
         cName: "sub-nav",
       },
       {
@@ -35,12 +35,12 @@ export const SidebarData = [
   {
     title: "Food Category",
     path: "/dashboard/fc",
-    icon: <IoIcons.IoIosPaper />,
+    icon: <IoIcons.IoIosArchive />,
   },
   {
     title: "Tips",
     path: "/dashboard/tips",
-    icon: <FaIcons.FaCartPlus />,
+    icon: <IoIcons.IoIosShare />,
   },
 
   {
